@@ -1,7 +1,4 @@
-
-@let isMobileMenu = viewportService.width <= 460; 
-
-@if (!isProfileMenuOpen) { <div class="menu-contain">
+@let isMobileMenu = viewportService.width <= 460; @if (!isProfileMenuOpen) { <div class="menu-contain">
     <div *ngIf="isMobileMenu" class="line-contain">
         <div class="line"></div>
     </div>
@@ -12,8 +9,8 @@
                 class="btn-icon"></mat-icon>Impressum</button></a>
     <a [routerLink]="['/dashboard/privacy-policy']" class="btn-icon"><button><mat-icon *ngIf="isMobileMenu"
                 fontIcon="policy" class="btn-icon"></mat-icon>Datenschutz</button></a>
-    <button class="log-out-btn" (click)="closeThreadAndMessenger()" (click)="authService.logout()"><mat-icon
-            *ngIf="isMobileMenu" fontIcon="logout" class="btn-icon"></mat-icon>Log out</button>
+    <button class="log-out-btn" (click)="authService.logout()"><mat-icon *ngIf="isMobileMenu" fontIcon="logout"
+            class="btn-icon"></mat-icon>Log out</button>
     </div>
     } @else {
     <div (click)="noClickable($event)" class="profile-menu-contain"
@@ -32,8 +29,8 @@
             <img src="{{authService.currentUserSig()?.avatar || authService.defaultAvatarURL}}" alt="user_profile_img">
         </div>
         <div *ngIf="isOpenEditEditor" style="pointer-events: all;">
-            <img [src]="imgUpload.filePreview ||authService.currentUserSig()?.avatar || authService.defaultAvatarURL" (click)="fileInput.click()"
-                alt="user_profile_img">
+            <img [src]="imgUpload.filePreview ||authService.currentUserSig()?.avatar || authService.defaultAvatarURL"
+                (click)="fileInput.click()" alt="user_profile_img">
             <input type="file" #fileInput accept="image/*" (change)="imgUpload.onFileSelected($event)"
                 style="display: none;">
         </div>

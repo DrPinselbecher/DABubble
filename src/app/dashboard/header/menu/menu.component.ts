@@ -50,14 +50,6 @@ export class MenuComponent {
   constructor() { }
 
   /**
-   * Closes both the thread and messenger components by setting their visibility to false.
-   */
-  closeThreadAndMessenger(): void {
-    this.messengerService.showMessenger = false;
-    this.threadService.showThread = false;
-  }
-
-  /**
    * Toggles the visibility of the profile menu.
    * 
    * - Opens the menu if it is currently closed and emits the change.

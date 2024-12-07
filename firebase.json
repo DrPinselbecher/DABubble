@@ -1,6 +1,10 @@
 {
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
   "hosting": {
-    "public": "dist/da-bubble/browser",
+    "public": "dist/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -12,5 +16,8 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }

@@ -24,17 +24,19 @@ export class ThreadService {
   userListSubscription: any;
   usersInChannel: any[] = [];
 
+  subChannelUserListUnsubscribe: (() => void) | null = null;
+
+
+  constructor() { }
+
   subChannelUserList(callback: any) {
     const messegeRef = doc(collection(this.firestore, `channels`), this.channelID);
-    return onSnapshot(messegeRef, (list) => {
-      if (list.exists()) {
-        if (callback) {
-          callback(list);
-        }
+    this.subChannelUserListUnsubscribe = onSnapshot(messegeRef, (list) => {
+      if (list.exists() && callback) {
+        callback(list);
       }
-    })
+    });
   }
-
 
   getTheUsersOfChannel() {
     this.userListSubscription = this.firestoreService.userList$.subscribe(users => {
@@ -46,12 +48,11 @@ export class ThreadService {
           const userID = usersIDs[i];
           const user = usersListAll.filter(user => user.userID === userID);
           this.usersInChannel.push(this.getCleanJson(user));
-          this.sortByName(this.usersInChannel);          
+          this.sortByName(this.usersInChannel);
         }
       });
     });
   }
-
 
   sortByName(array: any[]) {
     array.sort((a, b) => {
@@ -60,7 +61,6 @@ export class ThreadService {
       return nameA.localeCompare(nameB);
     });
   }
-
 
   getCleanJson(user: UserInterface[]): UserInterface {
     let userJson = {
@@ -73,5 +73,14 @@ export class ThreadService {
       isFocus: user[0]['isFocus'],
     }
     return userJson;
+  }
+
+  unsubscribeAll() {
+    if (this.userListSubscription) {
+      this.userListSubscription.unsubscribe();
+    }
+    if (this.subChannelUserListUnsubscribe) {
+      this.subChannelUserListUnsubscribe();
+    }
   }
 }

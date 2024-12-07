@@ -169,11 +169,15 @@ export class ThreadComponent implements AfterViewInit {
 
   /**
    * Lifecycle hook that is called when the component is destroyed.
-   * Disconnects the ResizeObservers for the header and the message.
-   * Also parses the message content for the message parser.
+   * - Disconnects the ResizeObservers for the header and the message.
+   * - Unsubscribes from all active subscriptions and Firestore snapshot listeners in the ThreadService.
+   * - Parses the message content for the message parser.
    */
   ngOnDestroy() {
     this.parser.parseMessage(this.firebaseMessenger.content);
+
+    this.threadService.unsubscribeAll();
+
     if (this.resizeObserverHeader) {
       this.resizeObserverHeader.disconnect();
     }
@@ -183,17 +187,18 @@ export class ThreadComponent implements AfterViewInit {
   }
 
 
-/**
- * Returns the parsed message content.
- *
- * If the component is in edit mode for answer messages, it returns the
- * original message content without any parsing. Otherwise, it invokes the
- * message parser service to parse the answer content from the firebase
- * messenger and returns the parsed result.
- *
- * @param message - The original message content.
- * @returns The parsed message content or the original message if in edit mode.
- */
+
+  /**
+   * Returns the parsed message content.
+   *
+   * If the component is in edit mode for answer messages, it returns the
+   * original message content without any parsing. Otherwise, it invokes the
+   * message parser service to parse the answer content from the firebase
+   * messenger and returns the parsed result.
+   *
+   * @param message - The original message content.
+   * @returns The parsed message content or the original message if in edit mode.
+   */
   getParsedMessage(message: string): string {
     if (this.editAnswerMessage) {
       return message;
@@ -206,7 +211,7 @@ export class ThreadComponent implements AfterViewInit {
    * controlls how many answered message are under the main message
    * @returns - the number of answered messages
    */
-  checkAnswerArrayLength():string {
+  checkAnswerArrayLength(): string {
     if (this.firebaseMessenger.answers.length > 1) {
       return `${this.firebaseMessenger.answers.length} Antworten`;
     } else if (this.firebaseMessenger.answers.length == 0) {

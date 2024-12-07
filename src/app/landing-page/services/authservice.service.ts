@@ -1,7 +1,8 @@
-import {  Injectable, inject, signal } from '@angular/core';
-import {Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail,
+import { Injectable, inject, signal } from '@angular/core';
+import {
+  Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail,
   signOut, updateProfile, user, GoogleAuthProvider, signInWithPopup, confirmPasswordReset, updateEmail,
-  sendEmailVerification, EmailAuthProvider, reauthenticateWithCredential,User,signInAnonymously,onAuthStateChanged
+  sendEmailVerification, EmailAuthProvider, reauthenticateWithCredential, User, signInAnonymously, onAuthStateChanged
 } from '@angular/fire/auth';
 import { UserInterface } from '../interfaces/userinterface';
 import { catchError, from, map, Observable, throwError } from 'rxjs';
@@ -267,7 +268,7 @@ export class AuthserviceService {
     }
     return from(
       this.logoutPromise.then(() => {
-        this.router.navigate(['']);
+        window.location.assign('/');
       })
     );
   }

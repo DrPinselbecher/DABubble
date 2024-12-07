@@ -1,13 +1,13 @@
 <section>
   <app-logo></app-logo>
-  
+
   <div class="login">
     <div class="arrow-title">
-      <mat-icon routerLink="/" fontIcon="arrow_back" aria-hidden="false" class="arrow-back" tabindex="-1"></mat-icon>
+      <mat-icon routerLink="/" fontIcon="arrow_back" class="arrow-back" tabindex="-1"></mat-icon>
       <h1>Passwort zurücksetzen</h1>
     </div>
-    
-    
+
+
     <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
       <div class="form-group" [ngClass]="{'focused': isFocused.email}">
         <mat-icon matPrefix
@@ -21,15 +21,16 @@
           <span *ngIf="resetForm.get('email')?.hasError('required')">Geben Sie ein <strong>E-Mail</strong> ein</span>
         </div>
       </div>
-      <button type="submit" mat-flat-button class="primary button" [disabled]="resetForm.invalid && errorMessage" >Weiter</button>
+      <button type="submit" mat-flat-button class="primary button"
+        [disabled]="resetForm.invalid && errorMessage">Weiter</button>
     </form>
     @if(errorMessage){
-      <p style="font-size: 20px; color: #ED1E79;">{{ errorMessage }}</p>
+    <p style="font-size: 20px; color: #ED1E79;">{{ errorMessage }}</p>
     }
   </div>
 
   @if(showSuccessMessage){
-    <button class="response primary button"> <mat-icon>send</mat-icon> E-Mail gesendet</button>
+  <button class="response primary button"> <mat-icon>send</mat-icon> E-Mail gesendet</button>
   }
   <app-links></app-links>
 </section>
