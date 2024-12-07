@@ -1,0 +1,25 @@
+<section [ngStyle]="{'margin-right.px': sourceThread && viewportService.width > 1550 ? 8 : 40}">
+    <div style="display: flex; justify-content: space-around;">
+        @for(items of messageItems; track items){
+        <div style="display: flex;  position: relative;">
+            <div [innerHTML]="items" style="display: flex; flex-direction: row;"></div>
+            <span (click)="deleteImage(items)" style="position: absolute; top: -15px; right: -10px; cursor: pointer;">
+                <img onmouseenter="this.style.scale = '1.3';" onmouseleave="this.style.scale = '1';"
+                    style="rotate: 45deg;" src="/assets/icons/add-white.png" alt="">
+            </span>
+        </div>
+        }
+    </div>
+    <textarea [(ngModel)]="messengerService.editMessageContent" name="textareaEdit" id="" #textareaThread
+        pattern="^[\s\S]*\S[\s\S]*$" required="" #textarea="ngModel"></textarea>
+    <div>
+        <mat-icon (click)="closeOrOpenEmojisBoard()" *ngIf="viewportService.width > 1020">sentiment_satisfied</mat-icon>
+        <div>
+            <button mat-stroked-button (click)="closeEdit()">Abbrechen</button>
+            <button mat-flat-button (click)="checkWithMessageShouldUptade()"
+                [disabled]="!textarea.valid && messageItems.length < 1">Speichern</button>
+        </div>
+    </div>
+    <app-emoji-board *ngIf="showEmojiBoard" [ngStyle]="{'left.px': sourceThread ? 20 : 160}"
+        (callFunction)="closeOrOpenEmojisBoard()" [binding]="textareaThread"></app-emoji-board>
+</section>

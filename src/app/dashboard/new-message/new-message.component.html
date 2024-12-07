@@ -1,0 +1,59 @@
+<mat-card>
+    <header>
+        <h4>Neue Nachricht</h4>
+        <div class="search-bar">
+            <input id="userInput" #userInput matInput placeholder="An: #channel, @jemanden oder per E-Mail Adresse"
+                spellcheck="false" autocomplete="off" (input)="handleSearching($event)" (keydown)="onKeyDown($event)">
+            <app-user-filtered-list *ngIf="filterUsers" [filteredUsers]="filteredUsers"
+                [highlightedIndex]="highlightedIndex" (userSelected)="onUserAdded($event)"></app-user-filtered-list>
+            <app-channel-filtered-list *ngIf="filterChannels" [filteredChannels]="filteredChannels"
+                [highlightedIndex]="highlightedIndex"
+                (channelSelected)="onChannelAdded($event)"></app-channel-filtered-list>
+        </div>
+    </header>
+    <div class="content-contain">
+        <div class="list-contain">
+            <div class="title-list-contain">
+                <mat-icon class="tag" fontIcon="tag"></mat-icon>
+                <h5>Channels</h5>
+            </div>
+            <div class="scroll-contain">
+                <div class="list">
+                    <button *ngFor="let channel of messengerService.selectChannelsNewMessage; let i = index" class="channel-btn">
+                        <mat-icon class="tag" fontIcon="tag"></mat-icon>
+                        <span class="channelname-txt">{{ channel.title }}</span>
+                        <mat-icon class="remove-btn" style="margin-left: 10px;" fontIcon="delete_outline"
+                            (click)="removeSelectedChannel(channel)"></mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="seperator-wrapper">
+            <div class="seperator"></div>
+        </div>
+        <div class="list-contain">
+            <div class="title-list-contain">
+                <mat-icon fontIcon="alternate_email"></mat-icon>
+                <h5 style="margin-top: 2px;">Personen</h5>
+            </div>
+            <div class="scroll-contain">
+                <div class="list">
+                    <button *ngFor="let user of messengerService.selectUserNewMessage; let i = index">
+                        <div class="profile-img-wrapper">
+                            <img src="{{ user.avatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a' }}" alt="user_avatar_img">
+                            <div [ngClass]="{'status-online-icon': user.userStatus == 'on'}"></div>
+                            <div [ngClass]="{'status-offline-icon': user.userStatus == 'off'}"></div>
+                            <div [ngClass]="{'status-busy-icon': user.userStatus == 'busy'}"></div>
+                        </div>
+                        <span class="username-txt">{{ user.username }}</span>
+                        <span *ngIf="authService.currentUserSig()?.username === user.username"
+                            style="margin-left: -5px;">(Du)</span>
+                        <mat-icon class="remove-btn" fontIcon="delete_outline"
+                            (click)="removeSelectedUser(user)"></mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-textarea [sourceThread]="sourceThread"></app-textarea>
+</mat-card>

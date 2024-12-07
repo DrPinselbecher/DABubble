@@ -1,0 +1,106 @@
+<section>
+    @if (!sourceThread) {
+    <div id="mention-person" [ngStyle]="{'display': mentionPersonView ? 'block' : 'none'}">
+        <h6>Mitglieder:</h6>
+        <div id="trendline"></div>
+        <div id="user-list">
+            @for (user of mentionConfig.items; track $index) {
+            <div (click)="mentionUser(user, 'messenger')">
+                <img src="{{ user.avatar }}" alt="">
+                <p>{{ user.userName }}</p>
+            </div>
+            }
+        </div>
+    </div>
+    <div class="interaction-div">
+        <textarea [(ngModel)]="firebaseMessenger.content" name="textareaMessenger" #textareaMessenger
+            (input)="checkForMention(firebaseMessenger.content)" [mentionConfig]="mentionConfig"
+            pattern="^[\s\S]*\S[\s\S]*$" placeholder='{{chatOrChannelTxt()}}' #texterea="ngModel" required></textarea>
+        <div id="interaction">
+            <div id="button-container-left">
+                <p>
+                    <mat-icon (click)="fileInput.click()">add</mat-icon>
+                    <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*,application/pdf"
+                        multiple style="display: none;">
+                </p>
+                <div *ngIf="viewportService.width > 1020"></div>
+                <mat-icon class="mention-btn" (click)="openOrCloseEmojiBoard()" *ngIf="viewportService.width > 1020">mood</mat-icon>
+                <mat-icon class="mention-btn" *ngIf="messengerService.openChannel" (click)="openOrCloseMentionPersonView('messenger')">alternate_email</mat-icon>
+            </div>
+            <button id="send-message-btn" (click)="uploadFiles(messenger)"
+                *ngIf="texterea.valid || selectedFiles.length > 0"><img src="/assets/icons/send.png"
+                    alt="send-icon"></button>
+        </div>
+        <app-emoji-board *ngIf="showEmojiBoard" [binding]="textareaMessenger"
+            (callFunction)="openOrCloseEmojiBoard()"></app-emoji-board>
+        <div style="display: flex; gap: 15px; padding-top: 10px;" *ngIf="selectedFiles.length > 0">
+            <div *ngFor="let file of selectedFiles">
+                <div
+                    style="display: flex; align-items: flex-start; position: relative; cursor: pointer; flex-wrap: wrap;">
+                    <img style="width: 48px; height: 48px;" *ngIf="file.type.startsWith('image')" [src]="file.data"
+                        (click)="viewFile(file)" class="preview-img" />
+                    <span (click)="deletePreviewFile(file)"
+                        style="position: absolute; top: -15px; right: -10px; cursor: pointer;"><img
+                            onmouseenter="this.style.scale = '1.3';" onmouseleave="this.style.scale = '1';"
+                            style="rotate: 45deg;" src="/assets/icons/add-white.png" alt=""></span>
+                </div>
+
+                <div *ngIf="file.type === 'application/pdf'">
+                    <img style="width: 48px; height: 48px;" src="assets/icons/pdf.webp" alt="" (click)="viewFile(file)">
+                </div>
+            </div>
+        </div>
+    </div>
+    } @else {
+    <div id="mention-person" [ngStyle]="{'display': mentionPersonView ? 'block' : 'none'}">
+        <h6>Mitglieder:</h6>
+        <div id="trendline"></div>
+        <div id="user-list">
+            @for (user of mentionConfig.items; track $index) {
+            <div (click)="mentionUser(user, 'thread')">
+                <img src="{{ user.avatar }}" alt="">
+                <p>{{ user.userName }}</p>
+            </div>
+            }
+        </div>
+    </div>
+    <div class="interaction-div">
+        <textarea [(ngModel)]="firebaseMessenger.answerContent" name="textareaThread" #textareaThread
+            (input)="checkForMention(firebaseMessenger.answerContent)" [mentionConfig]="mentionConfig"
+            placeholder='Antworten...' #texterea="ngModel" pattern="^[\s\S]*\S[\s\S]*$" required></textarea>
+        <div id="interaction">
+            <div id="button-container-left">
+                <p>
+                    <mat-icon (click)="fileInput.click()">add</mat-icon>
+                    <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*,application/pdf"
+                        multiple style="display: none;">
+                </p>
+                <div *ngIf="viewportService.width > 1020"></div>
+                <mat-icon class="mention-btn" (click)="openOrCloseEmojiBoard()" *ngIf="viewportService.width > 1020">mood</mat-icon>
+                <mat-icon class="mention-btn" *ngIf="messengerService.openChannel" (click)="openOrCloseMentionPersonView('thread')">alternate_email</mat-icon>
+            </div>
+            <button id="send-message-btn" (click)="uploadFiles('thread')" *ngIf="texterea.valid"><img
+                    src="/assets/icons/send.png" alt="send-icon"></button>
+        </div>
+        <app-emoji-board *ngIf="showEmojiBoard" [binding]="textareaThread"
+            (callFunction)="openOrCloseEmojiBoard()"></app-emoji-board>
+        <div style="display: flex; gap: 15px; padding-top: 10px;" *ngIf="selectedFiles.length > 0">
+            <div *ngFor="let file of selectedFiles">
+                <div
+                    style="display: flex; align-items: flex-start; position: relative; cursor: pointer; flex-wrap: wrap;">
+                    <img style="width: 48px; height: 48px;" *ngIf="file.type.startsWith('image')" [src]="file.data"
+                        (click)="viewFile(file)" class="preview-img" />
+                    <span (click)="deletePreviewFile(file)"
+                        style="position: absolute; top: -15px; right: -10px; cursor: pointer;"><img
+                            onmouseenter="this.style.scale = '1.3';" onmouseleave="this.style.scale = '1';"
+                            style="rotate: 45deg;" src="/assets/icons/add-white.png" alt=""></span>
+                </div>
+
+                <div *ngIf="file.type === 'application/pdf'">
+                    <img style="width: 48px; height: 48px;" src="assets/icons/pdf.webp" alt="" (click)="viewFile(file)">
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</section>

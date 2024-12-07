@@ -1,0 +1,14 @@
+<div class="frame">
+  <h2 mat-dialog-title>Dateivorschau</h2>
+  <div mat-dialog-content >
+    <div *ngIf="data.file.type.startsWith('image')">
+      <img [src]="data.file.data" style="width: 100%; height: auto; object-fit: cover;" alt="Image preview" />
+    </div>
+    <div *ngIf="data.file.type === 'application/pdf'" height="100%">
+      <iframe [src]="safePdfUrl" frameborder="0"></iframe>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button class="primary" (click)="closeDialog()">Close</button>
+  </div>
+</div>

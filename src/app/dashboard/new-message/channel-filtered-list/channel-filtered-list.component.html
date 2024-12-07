@@ -1,0 +1,10 @@
+<mat-card appearance="outlined" *ngIf="filteredChannels.length > 0"
+    [ngClass]="{'foundOne': filteredChannels.length === 1,'foundMore': filteredChannels.length > 1}">
+    <mat-card-content>
+        <button *ngFor="let channel of filteredChannels; let i = index" class="channel-btn"
+            [ngClass]="{'highlight-btn': i === highlightedIndex}" (click)="addChannel(channel)">
+            <mat-icon class="tag" fontIcon="tag"></mat-icon>
+            <span class="channelname-txt">{{ channel.title }}</span>
+        </button>
+    </mat-card-content>
+</mat-card>

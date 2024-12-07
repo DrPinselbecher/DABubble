@@ -1,0 +1,42 @@
+<header>
+    <div class="img-contain">
+        <img *ngIf="!messengerOrThreadIsOpen() && viewportService.width <= 1020 || viewportService.width > 1020"
+            src="assets/img/logo-with-text.png" alt="DABubble Logo">
+        <div *ngIf="messengerOrThreadIsOpen() && viewportService.width <= 1020" class="img-contain-responsive"
+            (mousedown)="backToChannelUserList()">
+            <mat-icon fontIcon="chevron_left" class="arrow-left"></mat-icon>
+            <img src="assets/img/workspace_logo.png" alt="devspace_img">
+            <span>Devspace</span>
+        </div>
+    </div>
+    <div *ngIf="viewportService.width >= 1020" class="search-bar-contain" (click)="focusSearchInput()">
+        <input #searchInput placeholder="Devspace durchsuchen . . ." type="text" (input)="onSearch()">
+        <div>
+            <mat-icon fontIcon="search" class="search-icon"></mat-icon>
+        </div>
+    </div>
+    @if(searchService.madeQuery){
+    <div class="search-results-contain">
+        <app-search-result></app-search-result>
+    </div>
+    }
+    <div class="profile-contain-header">
+        <div [matMenuTriggerFor]="menu" (menuOpened)="openProfileMenu()" (menuClosed)="closeProfileMenu()">
+            <div class=" username-menu-contain-header">
+                <span *ngIf="viewportService.width >= 1020" #userName class="user-name">{{
+                    authService.currentUserSig()?.username }}</span>
+                <div class="profile-img-wrapper">
+                    <img src="{{authService.currentUserSig()?.avatar || authService.defaultAvatarURL}}" alt="avatar">
+                    <div [ngClass]="{'status-online-icon': userStatus =='on'}"></div>
+                    <div [ngClass]="{'status-offline-icon': userStatus =='off'}"></div>
+                    <div [ngClass]="{'status-busy-icon': userStatus == 'busy'}"></div>
+                </div>
+                <mat-icon fontIcon="expand_more" class="profile-menu-icon"></mat-icon>
+            </div>
+        </div>
+        <mat-menu #menu="matMenu" xPosition="before">
+            <app-menu class="menu-contain" [(userStatus)]="userStatus" [(isProfileMenuOpen)]="isProfileMenuOpen"
+                [(isUnderMenuOpen)]="isUnderMenuOpen" [(isOpenEditEditor)]="isOpenEditEditor"></app-menu>
+        </mat-menu>
+    </div>
+</header>

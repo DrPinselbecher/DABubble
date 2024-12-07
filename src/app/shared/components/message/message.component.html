@@ -1,0 +1,76 @@
+<div class="date-container" *ngIf="showDate">
+    <div>{{ giveDateBack(message.date, 'dateInfo') }}</div>
+    <div></div>
+</div>
+<section class="message" [ngStyle]="{'margin-top.px': messageIndex == 0 ? 10 : 30}"
+    [ngClass]="{'message-from-you': message.senderID == authService.currentUserSig()?.userID, 'z-index': showEmojiBoard}"
+    (mouseenter)="hoveredMessageId = messageIndex"
+    (mouseleave)="hoveredMessageId = -1; hoveredMenu = false; closeEmojiBoard()">
+    <img src="{{message.senderAvatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a'}}" alt="Profile" id="img-avatar">
+    <div id="message-content" *ngIf="!editMessage">
+        <div class="header">
+            <h6 #nameHeadline>{{ messageName }}</h6>
+            <p>{{ message.date | date:'H:mm' }}
+                <span>Uhr</span>
+            </p>
+        </div>
+        <div id="message-text">
+            <div id="mentioned-user-container" *ngIf="mentionedUsers.length > 0">
+                @for (mentionedUser of mentionedUsers; track $index) {
+                <div>
+                    &#64;{{mentionedUser.userName}}
+                    <!-- <mat-icon id="test" (click)="deleteMentionUser(user)">close</mat-icon> -->
+                </div>
+                }
+            </div>
+            <div [innerHTML]="getParsedMessage(message.content)" id="text"></div>
+        </div>
+        <div id="reaktions-container">
+            <mat-icon *ngIf="reactions.length !== 0" (click)="openOrCloseEmojiBoard()">add_reaction</mat-icon>
+            @for (reaction of reactions; track $index) {
+            <app-emojis-reaktion *ngIf="reaction.messageID == message.messageID && $index < howManyReactionsToDisplay()" [reaction]="reaction"
+                [reactionsArrayLength]="reactions.length" [reactionIndex]="$index"
+                [index]="messageIndex"></app-emojis-reaktion>
+            }
+            <div class="more-reactions-div">
+                <button class="more-reactions-btn" *ngIf="reactions.length > howManyReactionsToDisplay()"
+                    (click)="openRestReactions = !openRestReactions">
+                    +{{ reactions.length - howManyReactionsToDisplay() }}
+                </button>
+
+                <div class="window-more-reactions-div" *ngIf="openRestReactions && hoveredMessageId == messageIndex && reactions.length > howManyReactionsToDisplay()">
+                    @for (reaction of reactions; track $index) {
+                    <app-emojis-reaktion *ngIf="reaction.messageID == message.messageID && $index >= howManyReactionsToDisplay()"
+                        [reaction]="reaction" [reactionsArrayLength]="reactions.length" [reactionIndex]="$index"
+                        [index]="messageIndex"></app-emojis-reaktion>
+                    }
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!reduceContent" id="answer-container">
+            <a (click)="openThread()">{{ giveAnswerLengthBack() }}</a>
+            <p><span *ngIf="answers.length > 0">Letzte Antwort {{ giveDateBack(answers[this.answers.length - 1].date,
+                    'answerText') }} um {{ giveLastAnswerDateBack() | date: 'H:mm' }}</span></p>
+        </div>
+    </div>
+    <div class="interaction" *ngIf="hoveredMessageId == messageIndex && !editMessage">
+        @for (reaction of lastTwoReactins.slice(0,2); track $index) {
+        <app-emojis-reaktion [reaction]="reaction" [messageInteraction]="true"
+            [index]="messageIndex"></app-emojis-reaktion>
+        }
+        <button (click)="openOrCloseEmojiBoard()"><mat-icon>add_reaction</mat-icon></button>
+        <button *ngIf="!reduceContent" (click)="openThread()"><img src="/assets/icons/comment.png" alt=""></button>
+        <button id="intercation-more-btn" (click)="showOrHideMenu()">
+            <mat-icon>more_vert</mat-icon>
+            <div (click)="editMessage = true;" *ngIf="hoveredMenu == true" (mouseleave)="hoveredMenu = false">
+                <p>Nachricht bearbeiten</p>
+            </div>
+        </button>
+    </div>
+    <app-edit-message *ngIf="editMessage" [message]="message" [mentionedUsers]="mentionedUsers"
+        [sourceThread]="sourceThread" (closeEditMessage)="closeEdit($event)"
+        [editAnswerMessage]="editAnswerMessage"></app-edit-message>
+    <app-emoji-board *ngIf="showEmojiBoard" [ngStyle]="{'left.px': sourceThread ? 20 : 240}"
+        [binding]="firebaseMessenger.reaktionContent" (callFunction)="openOrCloseEmojiBoard()" [message]="message"
+        (mouseleave)="openOrCloseEmojiBoard()"></app-emoji-board>
+</section>

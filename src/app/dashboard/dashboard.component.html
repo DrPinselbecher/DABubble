@@ -1,0 +1,46 @@
+<ng-container *ngIf="isUserLoaded; else loading">
+    <main *ngIf="viewportService.width > 1020" class="main-contain">
+        <app-header></app-header>
+        <section>
+            <mat-drawer-container>
+                <mat-drawer #drawer mode="side" position="start" [opened]="isSideNavOpen">
+                    <app-channels-userlist></app-channels-userlist>
+                </mat-drawer>
+                <mat-drawer-content>
+                    <app-messenger *ngIf="messengerService.openMessenger"></app-messenger>
+                    <app-new-message *ngIf="messengerService.openNewMessage"></app-new-message>
+                    <app-thread *ngIf="threadService.showThreadSideNav && viewportService.width < 1550 && viewportService.width > 1020"></app-thread>
+                </mat-drawer-content>
+                <mat-drawer #drawerThread mode="side" class="mat-drawer-thread"
+                    [opened]="threadService.showThreadSideNav" position="end">
+                    <app-thread *ngIf="threadService.showThreadSideNav && viewportService.width >= 1550"></app-thread>
+                </mat-drawer>
+            </mat-drawer-container>
+        </section>
+        <button class="toggle-btn" (click)="toggleSideNav()"
+            [ngClass]="{ 'close-btn': isSideNavOpen, 'open-btn': !isSideNavOpen }">
+            <div class="txt-icon-contain">
+                <span>
+                    {{ isSideNavOpen ? 'Workspace-Menü schließen' : 'Workspace-Menü öffnen' }}
+                </span>
+                <mat-icon fontIcon="open_in_browser"></mat-icon>
+            </div>
+        </button>
+    </main>
+    <main *ngIf="viewportService.width <= 1020" class="responsive-main-contain"
+        [ngClass]="{'p-bottom100' : browserTypeOnTouchService.isSafari() && browserTypeOnTouchService.isTouch(), 'p-bottom130': browserTypeOnTouchService.isChrome() && browserTypeOnTouchService.isTouch()}">
+        <app-header></app-header>
+        <app-channels-userlist
+            *ngIf="!messengerService.openMessenger && !threadService.showThreadSideNav"></app-channels-userlist>
+        <app-messenger *ngIf="messengerService.openMessenger"></app-messenger>
+        <app-thread *ngIf="threadService.showThreadSideNav"></app-thread>
+    </main>
+</ng-container>
+<ng-template #loading>
+    <div class="loading-container">
+        <mat-spinner class="loading-spinner"></mat-spinner>
+    @if(errorMessage != null){
+        <div class="loading-text">{{errorMessage}}</div>
+    }
+    </div>
+</ng-template>

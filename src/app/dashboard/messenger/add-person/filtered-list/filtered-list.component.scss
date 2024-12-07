@@ -1,0 +1,40 @@
+@use '../../../channels-userlist/user-list/user-list.component';
+
+mat-card {
+    width: 350px;
+    border: 1px solid #ADB0D9 !important;
+    border-radius: 30px 30px 30px 30px !important;
+    padding: 20px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    overflow-x: hidden;
+    pointer-events: all;
+
+    button {
+        width: 100%;
+        justify-content: flex-start !important;
+    }
+
+    mat-card-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 10px;
+        width: 100%;
+    }
+}
+
+.foundOne {
+    height: max-content;
+    transform: translate(33px, -10px);
+}
+
+.foundMore {
+    height: 170px;
+    transform: translate(33px, 50px);
+}
+
+.highlight-btn {
+    background-color: #ECEEFE !important;
+}

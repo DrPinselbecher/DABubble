@@ -1,0 +1,39 @@
+@use './../channels-userlist.component';
+
+img {
+    width: 54px;
+    height: 54px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+button {
+    display: inline-block !important;
+    display: flex !important;
+    align-items: center !important;
+    border-radius: 35px !important;
+    min-height: 58px !important;
+}
+
+.profile-img-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    div {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        border: 2px solid white;
+        width: 14px;
+        height: 14px;
+        border-radius: 100%;
+    }
+}
+
+.username-txt {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 130px;
+}

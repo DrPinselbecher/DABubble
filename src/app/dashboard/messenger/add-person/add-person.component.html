@@ -1,0 +1,47 @@
+<section>
+    <header>
+        <h1>{{checkText()}}</h1>
+        <mat-icon (click)="closeDialog()">close</mat-icon>
+    </header>
+    @if (!addPersonView) {
+    <div id="users">
+        @for (user of users; track $index) {
+        <div (click)="openDialogDetailPerson(user)">
+            <img src="{{user.avatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a'}}" alt="">
+            <p *ngIf="user.userID !== authService.currentUserSig()?.userID">{{user.username}}</p>
+            <p *ngIf="user.userID == authService.currentUserSig()?.userID">
+                {{user.username}} (Du)
+            </p>
+        </div>
+        }
+    </div>
+    <button (click)="openAddPerson()" *ngIf="messengerService.channel.title !== 'Allgemein'">
+        <mat-icon>group_add</mat-icon>
+        <p>Mitglieder hinzufügen</p>
+    </button>
+    } @else {
+    <p id="channel-title"><span>#</span> {{messengerService.channel.title}}</p>
+    <div class="add-specific-member-contain" (wheel)="onWheel($event)">
+        <mat-chip-grid #chipGrid>
+            <div class="chip-contain" *ngFor="let member of memberSourceService.membersSource(); let i = index">
+                <img src="{{ member.avatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a' }}" alt="user_img">
+                <span>{{ member.username }}</span>
+                <div class="icon-wrapper">
+                    <mat-icon (mousedown)="remove(member)" fontIcon="close"></mat-icon>
+                </div>
+            </div>
+        </mat-chip-grid>
+        <input #userInput autocomplete="off" placeholder="Name eingeben" [matChipInputFor]="chipGrid"
+            (input)="searchUserByName($event)" (keydown)="onKeyDown($event)" />
+    </div>
+    <app-filtered-list [filteredUsers]="filteredUsers" [highlightedIndex]="highlightedIndex"
+        (userSelected)="onUserAdded($event)">
+    </app-filtered-list>
+    <div id="add-button-div">
+        <button (click)="addMembersToChannel()" [disabled]="memberSourceService.membersSource().length == 0"
+            class="primary default" mat-button>
+            Hinzufügen
+        </button>
+    </div>
+    }
+</section>

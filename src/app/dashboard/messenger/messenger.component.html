@@ -1,0 +1,77 @@
+<section>
+    <header>
+        <button *ngIf="messengerService.openChart" (click)="openDialog()" class="user-name-contain">
+            <img src="{{ messengerService.user.avatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a' }}" alt="DABubble Logo" *ngIf="messengerService.openChart">
+            <h4 #name>{{ messengerService.messageName }}</h4>
+        </button>
+        <div class="edit-channel-contain" *ngIf="messengerService.openChannel">
+            <button (click)="editChannelIsOpen = !editChannelIsOpen" type="button" cdkOverlayOrigin
+                #trigger="cdkOverlayOrigin" class="channel-title-contain" [class.active]="editChannelIsOpen">
+                <mat-icon class="tag-icon" fontIcon="tag"></mat-icon>
+                <h4>{{ messengerService.channel.title }}</h4>
+                <mat-icon fontIcon="expand_more"></mat-icon>
+            </button>
+            <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger"
+                [cdkConnectedOverlayOpen]="editChannelIsOpen" [cdkConnectedOverlayHasBackdrop]="true"
+                [cdkConnectedOverlayBackdropClass]="'overlay-backdrop'" (backdropClick)="editChannelIsOpen = false">
+                <app-edit-channel (click)="closeEditChannel()"
+                    (closeOverlay)="editChannelIsOpen = false"></app-edit-channel>
+            </ng-template>
+        </div>
+        <div id="add-user-complete-container" *ngIf="messengerService.openChannel">
+            <button
+                (click)=" this.messengerService.showAddPerson = !this.messengerService.showAddPerson; showAddPersonDialogDirect = false"
+                cdkOverlayOrigin #trigge="cdkOverlayOrigin">
+                @if (viewportService.width > 500) {
+                    <div>
+                        @for (user of threadService.usersInChannel; track $index) {
+                            @if (viewportService.width > 1140) {
+                                <img [ngStyle]="{'margin-left.px': $index > 0 ? -10 : 0}" src="{{user.avatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a'}}" alt="" *ngIf="$index < 10">
+                                <div [ngStyle]="{'margin-left.px': $index > 0 ? -10 : 0}" *ngIf="$index == threadService.usersInChannel.length - 1 && $index > 10">+{{ threadService.usersInChannel.length - 10 }}</div>
+                                <p *ngIf="$index == threadService.usersInChannel.length - 1 && $index < 10" class="user-count">{{threadService.usersInChannel.length}}</p>
+                            } @else if (viewportService.width < 1140) {
+                                <img [ngStyle]="{'margin-left.px': $index > 0 ? -10 : 0}" src="{{user.avatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a'}}" alt="" *ngIf="$index < 4">
+                                <div [ngStyle]="{'margin-left.px': $index > 0 ? -10 : 0}" *ngIf="$index == threadService.usersInChannel.length - 1 && $index > 10">+{{ threadService.usersInChannel.length - 4 }}</div>
+                                <p *ngIf="$index == threadService.usersInChannel.length - 1 && $index < 4" class="user-count">{{threadService.usersInChannel.length}}</p>
+                            } 
+                        }
+                    </div>
+                }
+            </button>
+            @if (messengerService.channel.title !== 'Allgemein') {
+                <mat-icon
+                    *ngIf="viewportService.width > 500" (click)="this.messengerService.showAddPerson = !this.messengerService.showAddPerson; showAddPersonDialogDirect = true">group_add</mat-icon>
+                <mat-icon
+                    *ngIf="viewportService.width <= 500" (click)="this.messengerService.showAddPerson = !this.messengerService.showAddPerson; showAddPersonDialogDirect = false">group_add</mat-icon>
+            }
+            <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigge"
+                [cdkConnectedOverlayOpen]="this.messengerService.showAddPerson" [cdkConnectedOverlayHasBackdrop]="true"
+                [cdkConnectedOverlayBackdropClass]="'overlay-backdrop'"
+                (backdropClick)="this.messengerService.showAddPerson = false">
+                <app-add-person (closeOverlay)="this.messengerService.showAddPerson= false"
+                    [addPersonView]="showAddPersonDialogDirect" [users]="threadService.usersInChannel"></app-add-person>
+            </ng-template>
+        </div>
+    </header>
+    <div id="content">
+        <div id="messages-container" #content>
+            <div id="info" [ngStyle]="{'padding-top.px': firebaseMessenger.messages.length > 0 ? 0 : 100}">
+                <div>
+                    <img src="{{messengerService.user.avatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a'}}" alt="Profile" *ngIf="messengerService.openChart">
+                    <h3 *ngIf="messengerService.openChannel">#{{ messengerService.channel.title }}</h3>
+                    <h4 *ngIf="messengerService.openChart">{{ messengerService.user.username}}</h4>
+                </div>
+                <p *ngIf="messengerService.openChannel">Das ist der Anfang des Channels <a href="">&#64;{{
+                        messengerService.channel.title }}</a></p>
+                <p *ngIf="messengerService.openChart">
+                    Diese Unterhaltung findet nur zwischen <a href="">&#64;{{ messengerService.user.username }}</a> und
+                    dir statt.</p>
+            </div>
+            @for (message of firebaseMessenger.messages; track $index) {
+            <app-message id="{{message.messageID}}" [message]="message" [message]="message"
+                [messageIndex]="$index"></app-message>
+            }
+        </div>
+        <app-textarea [sourceThread]="sourceThread"></app-textarea>
+    </div>
+</section>

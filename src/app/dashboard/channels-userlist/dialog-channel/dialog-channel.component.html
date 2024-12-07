@@ -1,0 +1,36 @@
+<div class="dialog-contain" [ngClass]="getDialogClass()">
+    <header>
+        <h2 *ngIf="!showAddMembersDialog">Channel erstellen</h2>
+        <h2 *ngIf="showAddMembersDialog">Leute hinzufügen</h2>
+        <mat-icon mat-dialog-close fontIcon="close"></mat-icon>
+    </header>
+    <mat-dialog-content>
+        <app-title-description *ngIf="!showAddMembersDialog">
+        </app-title-description>
+        <app-add-members *ngIf="showAddMembersDialog" #addMembersContent
+            (inputSelectedChange)="onSelectInputChanged($event)"
+            (inputValueChange)="inputValueChange($event)"></app-add-members>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button *ngIf="!showAddMembersDialog && !channelTitleExist() && !isGuestUnnamed()"
+            [disabled]="isTitleInputEmpty() || channelTitleExist()" class="primary default" mat-button
+            (click)="showAddMembers()">
+            weiter
+        </button>
+        <button *ngIf="!showAddMembersDialog && channelTitleExist() && !isGuestUnnamed()"
+            [disabled]="isTitleInputEmpty() || channelTitleExist()" class="primary default" mat-button
+            (click)="showAddMembers()">
+            Channel existiert bereits
+        </button>
+        <button *ngIf="showAddMembersDialog" (click)="addChannel()"
+            [disabled]="selectInput && memberSourceService.membersSource().length === 0 || memberSourceService.membersSource().length == 0"
+            class="primary default" mat-button>
+            Erstellen
+        </button>
+        <button *ngIf="!showAddMembersDialog && isGuestUnnamed()" (click)="addChannel()"
+            [disabled]="selectInput && memberSourceService.membersSource().length === 0 || memberSourceService.membersSource().length == 0"
+            class="primary default" mat-button>
+            Bitte ändere deinen Namen
+        </button>
+    </mat-dialog-actions>
+</div>

@@ -1,0 +1,96 @@
+
+@let isMobileMenu = viewportService.width <= 460; 
+
+@if (!isProfileMenuOpen) { <div class="menu-contain">
+    <div *ngIf="isMobileMenu" class="line-contain">
+        <div class="line"></div>
+    </div>
+
+    <button (click)="toggleProfileMenu($event)" class="profile-btn"><mat-icon *ngIf="isMobileMenu"
+            fontIcon="account_circle" class="btn-icon"></mat-icon>Profil</button>
+    <a [routerLink]="['/dashboard/imprint']"><button><mat-icon *ngIf="isMobileMenu" fontIcon="fingerprint"
+                class="btn-icon"></mat-icon>Impressum</button></a>
+    <a [routerLink]="['/dashboard/privacy-policy']" class="btn-icon"><button><mat-icon *ngIf="isMobileMenu"
+                fontIcon="policy" class="btn-icon"></mat-icon>Datenschutz</button></a>
+    <button class="log-out-btn" (click)="closeThreadAndMessenger()" (click)="authService.logout()"><mat-icon
+            *ngIf="isMobileMenu" fontIcon="logout" class="btn-icon"></mat-icon>Log out</button>
+    </div>
+    } @else {
+    <div (click)="noClickable($event)" class="profile-menu-contain"
+        [ngClass]="!isMobileMenu ? 'open' : 'open-responsive'">
+        <div class="profile-menu-top">
+            <span *ngIf="!isOpenEditEditor">Profil</span>
+            <span *ngIf="isOpenEditEditor">Dein Profil bearbeiten</span>
+            <div>
+                <mat-icon *ngIf="!isOpenEditEditor" fontIcon="arrow_back" class="back-to-menu"
+                    (click)="toggleProfileMenu($event)"></mat-icon>
+                <mat-icon *ngIf="isOpenEditEditor" fontIcon="arrow_back" class="back-to-menu"
+                    (click)="toggleEditUserEditor($event); onCancelProgress()"></mat-icon>
+            </div>
+        </div>
+        <div *ngIf="!isOpenEditEditor">
+            <img src="{{authService.currentUserSig()?.avatar || authService.defaultAvatarURL}}" alt="user_profile_img">
+        </div>
+        <div *ngIf="isOpenEditEditor" style="pointer-events: all;">
+            <img [src]="imgUpload.filePreview ||authService.currentUserSig()?.avatar || authService.defaultAvatarURL" (click)="fileInput.click()"
+                alt="user_profile_img">
+            <input type="file" #fileInput accept="image/*" (change)="imgUpload.onFileSelected($event)"
+                style="display: none;">
+        </div>
+        @if(!isOpenEditEditor){
+        <div class="profil-info-edit-contain">
+            <div class="name-and-edit">
+                <div class="user-name-contain">
+                    <span class="user-name">{{authService.currentUserSig()?.username || 'Neuer Gast'}}</span>
+                </div>
+                <button *ngIf="!isMobileMenu" (click)="toggleEditUserEditor($event)" class="edit-user-btn">
+                    Bearbeiten
+                </button>
+                <button *ngIf="isMobileMenu" (click)="toggleEditUserEditor($event)" class="edit-user-btn">
+                    <mat-icon fontIcon="edit" class="edit-icon"></mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="status-contain">
+            <div *ngIf="!isUnderMenuOpen && userIsOnline()" class="status-info" (click)="openUnderMenuStatus($event)">
+                <div class="status-online-icon"></div>
+                <span class="status-online-txt">Online</span>
+            </div>
+            <div *ngIf="!isUnderMenuOpen && userIsOffline()" class="status-info" (click)="openUnderMenuStatus($event)">
+                <div class="status-offline-icon"></div>
+                <span class="status-offline-txt">Offline</span>
+            </div>
+            <div *ngIf="!isUnderMenuOpen && userIsBusy()" class="status-info" (click)="openUnderMenuStatus($event)">
+                <div class="status-busy-icon"></div>
+                <span class="status-busy-txt">Beschäftigt</span>
+            </div>
+            <div *ngIf="isUnderMenuOpen" class="status-undermenu">
+                <div *ngIf="!userIsOnline()">
+                    <span (click)="setUserStatus($event, 'on')" class="status-online-txt">Online</span>
+                </div>
+                <div *ngIf="!userIsBusy()">
+                    <span (click)="setUserStatus($event, 'busy')" class="status-busy-txt">Beschäftigt</span>
+                </div>
+                <div *ngIf="!userIsOffline()">
+                    <span (click)="setUserStatus($event, 'off')" class="status-offline-txt">Offline</span>
+                </div>
+            </div>
+            <mat-icon *ngIf="!isUnderMenuOpen" (click)="openUnderMenuStatus($event)" class="change-status-icon"
+                fontIcon="navigate_next">
+            </mat-icon>
+            <mat-icon *ngIf="isUnderMenuOpen" (click)="openUnderMenuStatus($event)" class="change-status-close-icon"
+                fontIcon="close">
+            </mat-icon>
+        </div>
+        <div class="email-menu-contain">
+            <div class="email-wrapper">
+                <mat-icon class="email-icon" fontIcon="email"></mat-icon>
+                <span class="email-title">E-Mail-Adresse</span>
+            </div>
+            <span class="user-email">{{authService.currentUserSig()?.email || 'gast@gast.de' }}</span>
+        </div>
+        } @else {
+        <app-edit-user [(isOpenEditEditor)]="isOpenEditEditor"></app-edit-user>
+        }
+    </div>
+    }

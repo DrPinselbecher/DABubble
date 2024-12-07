@@ -1,0 +1,100 @@
+section {
+    height: 100vh;
+    width: 100vw;
+    max-width: 100%;
+    background-color: #ECEEFE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+app-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    ::ng-deep .logo h2 {
+        display: none !important;
+    }
+    @media (max-width: 650px) {
+        padding-left: 55px;
+    }
+}
+
+mat-card {
+    display: flex;
+    padding: 48px 56px 48px 56px;
+    gap: 32px;
+    width: 100%;
+    max-width: 90%;
+    height: fit-content;
+}
+
+mat-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 0;
+}
+
+h1 {
+    color: #444DF2;
+    font-size: 46px;
+    font-weight: 700;
+    line-height: 55.2px;
+}
+
+h2 {
+    color: #444DF2;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 38.4px;
+}
+
+p {
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.contact-contain{
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width:500px){
+    mat-card{
+        padding: 20px 20px 20px 20px;
+    }
+}
+
+@media (max-height: 800px){
+    section{
+        flex-direction: column;
+    }
+    app-logo{
+        position: relative;
+        padding-left: 0px;
+        margin-bottom: 10px;
+    }
+    mat-card{
+        height: 600px;
+        overflow-y: scroll;
+        padding: 20px 20px 20px 20px;
+    }
+}
+
+@media (max-height:650px) and (max-width:4000px){
+    ::ng-deep .logo{
+        justify-content: center;
+        padding-left: 0px !important;
+        padding-top: 10px !important;
+    
+    }
+    mat-card{
+        gap: 10px;
+        justify-content: space-between;
+    }
+}

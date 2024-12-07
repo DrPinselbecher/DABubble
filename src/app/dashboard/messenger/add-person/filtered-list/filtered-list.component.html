@@ -1,0 +1,15 @@
+<mat-card appearance="outlined" *ngIf="filteredUsers.length > 0"
+    [ngClass]="{'foundOne': filteredUsers.length === 1,'foundMore': filteredUsers.length > 1, 'input-left': memberSourceService.membersSource().length === 0,'input-middle':memberSourceService.membersSource().length === 1,'input-right':memberSourceService.membersSource().length > 1}">
+    <mat-card-content>
+        <button *ngFor="let user of filteredUsers let i = index" [ngClass]="{'highlight-btn': i === highlightedIndex}"
+            (click)="addUser(user)">
+            <div class="profile-img-wrapper">
+                <img src="{{ user.avatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a' }}" alt="user_avatar_img">
+                <div [ngClass]="{'status-online-icon': user.userStatus == 'on'}"></div>
+                <div [ngClass]="{'status-offline-icon': user.userStatus == 'off'}"></div>
+                <div [ngClass]="{'status-busy-icon': user.userStatus == 'busy'}"></div>
+            </div>
+            <span>{{ user.username }}</span>
+        </button>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,665 @@
+* {
+    user-select: none !important;
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Nunito', sans-serif !important;
+}
+
+$purple: #444DF2;
+
+html,
+body {
+    height: 100lvh;
+    max-height: 100%;
+    width: 100vw;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+html {
+    button {
+        &.primary {
+            .mat-ripple-element {
+                background-color: $purple !important;
+            }
+        }
+
+        &.secondary {
+            .mat-ripple-element {
+                background-color: $purple !important;
+            }
+        }
+    }
+}
+
+button {
+
+    &.default {
+        overflow: hidden !important;
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        line-height: 24.55px !important;
+        transition: background-color 140ms ease, color 140ms ease !important;
+        min-width: 116px !important;
+        min-height: 49px !important;
+    }
+
+    &.primary {
+        color: white !important;
+
+        &:enabled {
+            background-color: $purple !important;
+        }
+
+        &:disabled {
+            background-color: #686868 !important;
+        }
+
+        &:hover {
+            background-color: #797EF3 !important;
+        }
+    }
+
+    &.secondary {
+        color: #444DF2 !important;
+        border: 1px solid #797EF3 !important;
+
+        &:enabled {
+            background-color: white !important;
+        }
+
+        &:disabled {
+            background-color: white !important;
+            color: #686868 !important;
+            border-color: #686868 !important;
+        }
+
+        &:hover {
+            background-color: #535AF1 !important;
+            color: white !important;
+        }
+    }
+}
+
+mat-icon {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 100% !important;
+    font-family: 'Material Icons Outlined' !important;
+
+    &:hover {
+        background-color: #ECEEFE;
+        color: #535AF1;
+        cursor: pointer;
+    }
+
+    &:active {
+        font-weight: 900;
+        color: black;
+    }
+}
+
+mat-icon,
+button {
+    transition: background-color 170ms ease, box-shadow 170ms ease, color 170ms ease !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+mat-card {
+    background-color: white !important;
+    border: none !important;
+    border-radius: 30px !important;
+}
+
+.mat-elevation-z2,
+.mat-mdc-elevation-specific.mat-elevation-z2 {
+    box-shadow: 0px 6px 10px 0px #00000033 !important;
+}
+
+.mat-mdc-menu-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 30px !important;
+
+    @media(max-width:545px) {
+        padding: 35px 20px !important;
+    }
+
+    @media(max-width:460px) {
+        width: 100vw !important;
+    }
+}
+
+.mat-mdc-menu-panel {
+    display: flex !important;
+    min-width: unset !important;
+    max-width: none !important;
+    height: auto;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+    outline: 0;
+    border-top-left-radius: 30px !important;
+    border-bottom-right-radius: 30px !important;
+    border-bottom-left-radius: 30px !important;
+    background-color: white !important;
+    will-change: transform, opacity;
+    pointer-events: none !important;
+
+    @media(max-width:460px) {
+        border: none !important;
+        border-radius: 30px 30px 0 0 !important;
+        width: 100%;
+    }
+}
+
+.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing {
+    opacity: 1;
+    visibility: visible;
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: background-color 130ms ease-in-out, opacity 130ms ease-in-out, visibility 0s 130ms;
+}
+
+.cdk-overlay-backdrop {
+    opacity: 1;
+    visibility: visible;
+    transition: background-color 130ms ease-in-out, opacity 130ms ease-in-out, visibility 0s 130ms;
+}
+
+.cdk-overlay-connected-position-bounding-box {
+    top: 112px !important;
+
+    @media(max-width:460px) {
+        top: unset !important;
+        right: 0 !important;
+        left: 0 !important;
+        bottom: 0 !important;
+        width: 100%;
+    }
+}
+
+.mat-mdc-dialog-container {
+    min-width: 100px !important;
+    max-width: none !important;
+}
+
+.cdk-overlay-pane {
+
+    @media(max-width:460px) {
+        // width: 100vw !important;
+        top: unset !important;
+        bottom: 0 !important;
+        border-radius: 30px;
+        box-shadow: 0px -3px 10px 0px #00000033;
+    }
+
+    .mat-mdc-dialog-panel {
+        max-width: none !important;
+    }
+}
+
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+    max-width: none !important;
+}
+
+.status-busy-icon,
+.status-offline-icon,
+.status-online-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+}
+
+.status-online-icon {
+    background-color: #92C83E;
+}
+
+.status-offline-icon {
+    background-color: #686868;
+}
+
+.status-busy-icon {
+    background-color: #FBB03B;
+}
+
+.status-online-txt {
+    color: #92C83E;
+}
+
+.status-offline-txt {
+    color: #686868;
+}
+
+.status-busy-txt {
+    color: #FBB03B;
+}
+
+.status-online-txt,
+.status-offline-txt,
+.status-busy-txt {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.mat-drawer-inner-container {
+    overflow: hidden !important;
+    height: 100% !important;
+}
+
+.mat-mdc-radio-button.mat-mdc-radio-checked .mat-ripple-element,
+.mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__background::before,
+.mat-mdc-radio-button .mdc-radio__background::before {
+    background-color: transparent !important;
+}
+
+.mat-mdc-radio-button .mat-internal-form-field {
+    pointer-events: none !important;
+}
+
+.mat-mdc-radio-button .mdc-radio__native-control {
+    pointer-events: auto !important;
+}
+
+.mat-mdc-radio-button .mdc-radio {
+    pointer-events: none !important;
+}
+
+.slideInFromTop {
+    animation: slideInFromTop 0.4s ease-in-out forwards;
+}
+
+.slideOutToTop {
+    animation: slideOutToTop 0.4s ease-in-out forwards;
+}
+
+.add-specific-member-contain {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    min-width: 100%;
+    max-width: max-content;
+    padding: 0 10px;
+    height: 52px;
+    font-size: 24px;
+    color: black;
+    border: 1px solid #ADB0D9;
+    border-radius: 30px;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0;
+    direction: ltr;
+    overflow-anchor: none !important;
+
+    mat-chip-grid {
+        pointer-events: none !important;
+    }
+
+    .chip-contain {
+        flex: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-radius: 20px;
+        background-color: #ECEEFE !important;
+        padding: 3px 15px;
+        pointer-events: none !important;
+        font-size: 18px;
+
+        .mat-chip {
+            pointer-events: none;
+        }
+
+        &:hover {
+            background-color: #ECEEFE !important;
+        }
+
+        .icon-wrapper {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        mat-icon {
+            width: max-content !important;
+            height: max-content !important;
+            font-size: 16px !important;
+            margin: 0;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        img {
+            object-fit: cover;
+            height: 32px;
+            width: 32px;
+        }
+
+        span {
+            pointer-events: none !important;
+        }
+    }
+
+    .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) .mdc-evolution-chip__text-label {
+        padding: 0 !important;
+    }
+
+    .mat-mdc-standard-chip .mdc-evolution-chip__cell--primary,
+    .mat-mdc-standard-chip .mdc-evolution-chip__action--primary,
+    .mat-mdc-standard-chip .mat-mdc-chip-action-label {
+        display: flex !important;
+        justify-content: space-between !important;
+        overflow: hidden !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .mat-mdc-standard-chip .mdc-evolution-chip__action--primary {
+        display: flex !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    input {
+        border: none !important;
+        background-color: transparent !important;
+        padding: 0 !important;
+        padding-left: 2px !important;
+        height: auto !important;
+        height: 100% !important;
+        font-size: 18px !important;
+    }
+
+    &:hover {
+        border-color: rgba($color: #444DF2, $alpha: 0.7);
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    .mdc-evolution-chip-set__chips {
+        flex-flow: nowrap;
+        overflow-x: scroll;
+        width: 100%;
+        max-width: max-content;
+        scrollbar-width: none;
+    }
+
+    .mat-mdc-chip-set .mdc-evolution-chip-set__chips {
+        width: 100%;
+        max-width: max-content;
+        min-width: 0;
+        box-sizing: border-box;
+        margin: 0;
+        gap: 8px;
+        pointer-events: none;
+    }
+
+    .mat-mdc-standard-chip .mdc-evolution-chip__action--primary::before {
+        content: none;
+    }
+}
+
+.mat-mdc-dialog-surface {
+    overflow: visible !important;
+    align-items: center !important;
+}
+
+.loading-spinner circle {
+    stroke: #444DF2 !important;
+    stroke-width: 7 !important;
+}
+
+.overlay-backdrop {
+    animation: fadeIn 200ms forwards;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing.overlay-backdrop {
+    animation: fadeIn 200ms ease forwards;
+}
+
+.cdk-overlay-backdrop.overlay-backdrop {
+    animation: fadeOut 200ms ease forwards;
+}
+
+.tag-icon {
+    font-weight: 400;
+    transform: skew(-10deg, -5deg) rotate(5deg);
+    display: inline-block;
+    animation: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes slideInFromTop {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+        pointer-events: none;
+    }
+
+    70% {
+        opacity: 1;
+        pointer-events: none;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+}
+
+@keyframes slideOutToTop {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: none;
+    }
+
+    60% {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-62px);
+        pointer-events: none;
+    }
+}
+
+.openMobileMenu {
+    animation: openMobileMenu 0.15s ease-out forwards;
+}
+
+.closeMobileMenu {
+    animation: closeMobileMenu 0.15s ease-out forwards;
+}
+
+@keyframes openMobileMenu {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes closeMobileMenu {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+@font-face {
+    font-family: "Symbola";
+    src: url("/fonts/Symbola-Emoji.woff") format("woff"),
+        url("/fonts/Symbola-Emoji.ttf") format("ttf");
+}
+
+/* nunito-200 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 200;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-200.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: italic;
+    font-weight: 200;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-200italic.woff2') format('woff2');
+}
+
+/* nunito-300 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-300.woff2') format('woff2');
+}
+
+/* nunito-300italic - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: italic;
+    font-weight: 300;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-300italic.woff2') format('woff2');
+}
+
+/* nunito-regular - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-regular.woff2') format('woff2');
+}
+
+/* nunito-italic - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: italic;
+    font-weight: 400;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-italic.woff2') format('woff2');
+}
+
+/* nunito-500 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-500.woff2') format('woff2');
+}
+
+/* nunito-500italic - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: italic;
+    font-weight: 500;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-500italic.woff2') format('woff2');
+}
+
+/* nunito-600 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-600.woff2') format('woff2');
+}
+
+/* nunito-600italic - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: italic;
+    font-weight: 600;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-600italic.woff2') format('woff2');
+}
+
+/* nunito-700 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-700.woff2') format('woff2');
+}
+
+/* nunito-700italic - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: italic;
+    font-weight: 700;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-700italic.woff2') format('woff2');
+}
+
+/* nunito-800 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 800;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-800.woff2') format('woff2');
+}
+
+/* nunito-800italic - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: italic;
+    font-weight: 800;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-800italic.woff2') format('woff2');
+}
+
+/* nunito-900 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 900;
+    src: url('../public/fonts/nunito-v26-latin/nunito-v26-latin-900.woff2') format('woff2');
+}

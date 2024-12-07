@@ -1,0 +1,58 @@
+@use '../shared-landing-styles';
+
+.register {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  padding-right: 55px;
+  padding-top: 30px;
+  font-size: 18px;
+  gap: 10px;
+  width: fit-content;
+  animation: fadeIn ease-in-out 1s forwards;
+  >a {
+    padding: 10px 15px;
+    border-radius: 30px;
+    text-decoration: none;
+    color: #797EF3;
+    border: 1px solid transparent;
+
+    &:hover {
+      color: #444df4;
+      border: 1px solid #797EF3;
+      transition: 150ms ease-in-out !important;
+      font-weight: 500;
+    }
+  }
+}
+
+@media (max-width:650px){
+  .register{
+    padding: 0;
+    >a{
+      border: 1px solid #797EF3;
+    }
+  }
+}
+
+@media (pointer: coarse) {
+ .register{
+  a {
+    border: 1px solid #797EF3;
+    background-color: #444df4; ;
+    color: white;
+  }
+ } 
+}
+
+@media (max-height:1050px){
+  .register{
+    a{
+      font-size: 16px;
+      padding: 10px 8px 10px 8px;
+      text-align: center;
+    }
+  }
+
+
+}

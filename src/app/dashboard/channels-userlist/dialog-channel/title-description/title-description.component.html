@@ -1,0 +1,22 @@
+<span class="add-channel-description">
+    Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein
+    #marketing zum Beispiel.
+</span>
+<div class="input-contain">
+    <span>Channel-Name</span>
+    <div class="channel-name-input-wrapper">
+        <mat-icon fontIcon="tag"></mat-icon>
+        <input #titleInput="ngModel" [(ngModel)]="channelDataService.titleSource" maxlength="23"
+            [ngClass]="{'input-with-txt': titleInput.value?.length > 0}" class="channel-name-input"
+            placeholder="z.B. Kooperationsprojekte">
+    </div>
+</div>
+<div class="input-contain">
+    <div>
+        <span>Beschreibung <span style="color: #686868; font-weight: 400;">(optional)</span></span>
+    </div>
+    <textarea #textarea="ngModel" [(ngModel)]="channelDataService.descriptionSource" maxlength="200"
+        class="textarea-with-txt" [ngClass]="{'textarea-with-txt': textarea.value?.length > 0}"
+        placeholder="Dein Text hier">
+    </textarea>
+</div>

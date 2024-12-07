@@ -1,0 +1,46 @@
+@defer () {
+<div class="edit-editor">
+    <div class="inputs-contain">
+        <div class="single-input-contain">
+            <div class="input-header">
+                <mat-icon fontIcon="account_circle"></mat-icon>
+                <span>Vollständiger Name</span>
+            </div>
+            <input #nameInput="ngModel" type="text" autocomplete="off" maxlength="23" matInput
+                placeholder="{{ authService.currentUserSig()?.username }}" [(ngModel)]="inputName">
+        </div>
+
+        @if( !authService.userLoggedWithGoogle() && !authService.isAnonymous()) {
+        <div class="single-input-contain">
+            <div class="input-header">
+                <mat-icon fontIcon="email"></mat-icon>
+                <span>Email Adresse</span>
+            </div>
+            <input #emailInput="ngModel" type="text" autocomplete="off" maxlength="39" matInput
+                placeholder="{{ authService.currentUserSig()?.email }}" [(ngModel)]="inputEmail">
+        </div>
+        <div class="single-input-contain">
+            <div class="input-header">
+                <mat-icon fontIcon="lock"></mat-icon>
+                <span>Passwort</span>
+            </div>
+            <input #passwordInput="ngModel" type="password" autocomplete="off" maxlength="39" matInput
+                placeholder="Anmelde Passwort eingeben" [(ngModel)]="inputPassword">
+        </div>
+        }
+        <div *ngIf="errorMessage" class="error-container">
+            {{ errorMessage }}
+        </div>
+
+    </div>
+    <div class="btn-contain">
+        <button mat-button class="secondary" (click)="cancelProcess()">Abbrechen</button>
+        <button mat-button class="primary"
+            [disabled]="( inputEmail.length < 1) && (inputName.length < 1) && !avatarChanged || sending"
+            (click)="sendData()">Speichern</button>
+    </div>
+    @if(successMessage != null) {
+    <button class="response primary">{{successMessage}}</button>
+    }
+</div>
+}

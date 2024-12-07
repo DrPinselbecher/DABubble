@@ -1,0 +1,40 @@
+@import '../shared-landing-styles.scss';
+@import '../../../styles.scss';
+
+section{
+  width: 100vw;
+  max-width: 100%;
+  min-height: 100vh;
+  background-color: #ECEEFE;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.button{
+  width: fit-content;
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+}
+
+@media (max-width:650px){
+  .arrow-title{
+    gap: 0px;
+  }
+}
+
+@media (max-width:650px){
+  h1{
+    line-height: 52px;
+  }
+}
+
+@media (max-width:500px){
+  h1{
+    font-size: 32px;
+    line-height: 32px;
+  }
+}

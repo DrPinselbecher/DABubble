@@ -1,0 +1,31 @@
+<section>
+    <header>
+        <h2>Profil</h2>
+        <mat-icon (click)="this.dialogRef.close()">close</mat-icon>
+    </header>
+    <img src="{{data.avatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a'}}" alt="">
+    <div id="name-container">
+        <h1>{{ data.username }}</h1>
+        <div>
+            <div id="status-container"
+                [ngClass]="{'status-online-icon': data.userStatus == 'on',  'status-offline-icon': data.userStatus == 'off',  'status-busy-icon': messengerService.user.userStatus == 'busy'}">
+            </div>
+            <p
+                [ngClass]="{'status-online-txt': data.userStatus == 'on', 'status-offline-txt': data.userStatus == 'off', 'status-busy-txt': data.userStatus == 'busy'}">
+                {{ checkUserStatus() }}</p>
+        </div>
+    </div>
+    <div id="email-container">
+        <mat-icon fontIcon="mail"></mat-icon>
+
+        <div>
+            <h2>E-Mail-Adresse</h2>
+            <a href="mailto:{{ data.email }}">{{ data.email }}</a>
+        </div>
+    </div>
+    <button class="primary default send-message-btn" (click)="openUser(data)" mat-button
+        *ngIf="messengerService.showMessageBtn">
+        <mat-icon>chat_bubble</mat-icon>
+        Nachricht
+    </button>
+</section>

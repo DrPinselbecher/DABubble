@@ -1,0 +1,35 @@
+<section>
+  <app-logo></app-logo>
+  
+  <div class="login">
+    <div class="arrow-title">
+      <mat-icon routerLink="/" fontIcon="arrow_back" aria-hidden="false" class="arrow-back" tabindex="-1"></mat-icon>
+      <h1>Passwort zurücksetzen</h1>
+    </div>
+    
+    
+    <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+      <div class="form-group" [ngClass]="{'focused': isFocused.email}">
+        <mat-icon matPrefix
+          [ngClass]="{'active-icon': isFocused.email, 'error-icon': resetForm.get('email')?.invalid && resetForm.get('email')?.touched}"
+          class="mat-icon-gray">email</mat-icon>
+        <input type="email" matInput formControlName="email" placeholder="max@muster.de" maxlength="25"
+          (focus)="onInputFocus('email')" (blur)="onInputBlur('email')"
+          [ngClass]="{'input-error': resetForm.get('email')?.invalid && resetForm.get('email')?.touched}">
+        <div class="error-message" *ngIf="resetForm.get('email')?.invalid && resetForm.get('email')?.touched">
+          <span *ngIf="resetForm.get('email')?.hasError('pattern')">Falsches <strong>E-Mail</strong></span>
+          <span *ngIf="resetForm.get('email')?.hasError('required')">Geben Sie ein <strong>E-Mail</strong> ein</span>
+        </div>
+      </div>
+      <button type="submit" mat-flat-button class="primary button" [disabled]="resetForm.invalid && errorMessage" >Weiter</button>
+    </form>
+    @if(errorMessage){
+      <p style="font-size: 20px; color: #ED1E79;">{{ errorMessage }}</p>
+    }
+  </div>
+
+  @if(showSuccessMessage){
+    <button class="response primary button"> <mat-icon>send</mat-icon> E-Mail gesendet</button>
+  }
+  <app-links></app-links>
+</section>

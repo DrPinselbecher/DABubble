@@ -1,0 +1,33 @@
+@use '../../shared-landing-styles';
+
+.logo{
+  position: relative;
+  padding-top: 30px;
+  padding-left: 55px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 300px;
+  animation: fadeIn ease-in-out 1s forwards;
+  >img{
+    width: 70px;
+    height: 70px;
+  }
+  >h2{
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    
+  }
+  &:hover{
+    cursor: pointer;
+  }
+}
+
+@media(max-width:650px){
+  .logo{
+    padding-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+}

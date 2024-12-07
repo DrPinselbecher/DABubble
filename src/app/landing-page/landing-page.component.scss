@@ -1,0 +1,51 @@
+section{
+  width: 100vw;
+  max-width: 100%;
+  height: 100vh;
+  background-color: #ECEEFE;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
+}
+
+.logo-section{
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+
+.register-under-650px{
+  display: none ;
+}
+
+.place-for-logo{
+  display: none;
+}
+
+@media (max-width:650px){
+  .register-under-650px{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .place-for-logo{
+    display: flex;
+    color: transparent;
+    height: 110px;
+    width: 0px;
+  }
+
+  .register-over-650px{
+    display: none;
+  }
+  .logo-section{
+    justify-content: center;
+  }
+}
+
+
+

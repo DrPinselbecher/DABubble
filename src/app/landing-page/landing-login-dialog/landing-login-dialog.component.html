@@ -1,0 +1,64 @@
+
+
+<section class="login">
+  <div class="title">
+    <h1>Anmeldung</h1>
+    <p>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest</p>
+  </div>
+
+
+  <div class="max-width inputs">
+    <form [formGroup]="loginForm">
+      <div class="form-group" [ngClass]="{'focused': isFocused.email}">
+        <mat-icon matPrefix
+          [ngClass]="{'active-icon': isFocused.email, 'error-icon': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
+          class="mat-icon-gray">email</mat-icon>
+        <input type="email" matInput formControlName="email" placeholder="max.@muster.de" maxlength="25"
+          (focus)="onInputFocus('email')" (blur)="onInputBlur('email')"
+          [ngClass]="{'input-error': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}">
+        <div class="error-message" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          <span *ngIf="loginForm.get('email')?.hasError('pattern')">Falsches <strong>E-Mail</strong> oder
+            <strong>Passwort</strong></span>
+          <span *ngIf="loginForm.get('email')?.hasError('required')">Geben Sie ein <strong>E-Mail</strong> ein</span>
+        </div>
+      </div>
+
+    
+      <div class="form-group" [ngClass]="{'focused': isFocused.password}">
+        <mat-icon matPrefix
+          [ngClass]="{'active-icon': isFocused.password, 'error-icon': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
+          class="mat-icon-gray">lock</mat-icon>
+        <input type="password" matInput formControlName="password" placeholder="Passwort" maxlength="25"
+          (focus)="onInputFocus('password')" (blur)="onInputBlur('password')"
+          [ngClass]="{'input-error': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
+        <div class="error-message" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          <span *ngIf="loginForm.get('password')?.hasError('required')">Geben Sie ein <strong>Passwort</strong> ein</span>
+          <span *ngIf="loginForm.get('password')?.hasError('pattern')"> Min <strong> 8</strong> Zeichen z.B. <strong>Abc123!.</strong> </span>
+        </div>
+        
+      </div>
+    </form>
+    <a routerLink="/passwort-zurücksetzen" class="forgotten">Passwort vergessen?</a>
+  </div>
+
+  
+  <div class="oder-container">
+    <div class="line"></div>
+    <span>ODER</span>
+    <div class="line"></div>
+  </div>
+
+  
+  <button class="google" (click)="loginWithGoogle()">
+    <img src="/assets/img/landing/login/google.png" alt=""> Anmelden mit Google
+  </button>
+  <div class="buttons-area">
+    <button mat-flat-button class="primary" (click)="onSubmit()" type="submit" [disabled]="loginForm.invalid">Anmelden</button>
+    <button mat-flat-button class="secondary" (click)="guestLogin()" routerLink="dashboard">Gäste-Login</button>
+    
+  </div>
+  <div class="global-error-message" style="font-size: 18px;" [ngClass]="{'show-error': errorMessage}">
+    <span>{{ errorMessage }}</span>
+  </div>
+
+</section>

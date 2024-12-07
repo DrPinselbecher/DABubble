@@ -1,0 +1,126 @@
+@if(searchService.searchResults.length <= 0 && searchService.filteredUsers.length <= 0 && searchService.filteredChannels.length <= 0 &&
+ searchService.filteredMessagesInChannels.length <= 0 && searchService.filteredThreads.length <= 0){
+  <div>
+    Keine gefundene Informationen
+  </div>
+}
+
+@if(searchService.searchResults.length > 0){
+  <div class="click-contain">
+    <span>{{ searchService.searchResults.length}}</span>
+    <span (click)="toggleView('messages')"> Gefundene Nachrichten</span>
+  </div>
+}
+
+@if(showMessages){
+  @for (result of searchService.searchResults; track $index) {
+    <div class="search-results-contain">
+      <div class="search-results-wrapper message" (click)="this.redirectService.goToMessage(result.messageID)">
+        <span class="sender-name">Von: {{result.senderName}}</span>
+        <span class="message-content">Nachricht: {{result.content }} </span>
+        <span class="message-date"> {{result.date | date:'yyyy-MM-dd' }}</span>
+      </div>
+    </div>
+  }
+}
+
+
+@if(searchService.filteredUsers.length > 0){
+  <div class="click-contain">
+    <span>{{ searchService.filteredUsers.length }}</span>
+    <span (click)="toggleView('users')"> Gefundene Benutzer</span>
+  </div>
+}
+
+@if( showUsers){
+  @for (user of searchService.filteredUsers; track $index) {
+    <div class="search-results-contain">
+      <div class="search-results-wrapper" (click)="this.redirectService.goToUser(user)">
+        <img src="{{user.avatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a'}}" alt="">
+        <span>{{user.username }} </span>
+      </div>
+    </div>
+  }
+}
+
+
+@if(searchService.filteredThreads.length > 0){
+  <div class="click-contain">
+    <span>{{ searchService.filteredThreads.length }}</span>
+    <span (click)="toggleView('threads')"> Gefundene Antworten</span>
+  </div>
+}
+
+@if(showThreads){
+  @for (message of searchService.filteredThreads; track $index) {
+    <div class="search-results-contain">
+      <div class="search-results-wrapper" (click)="this.redirectService.openThead(message, message.senderID) ;">
+        <span class="sender-name">Von: {{message.senderName}}</span>
+        <span class="message-content">Nachricht: {{message.content }} </span>
+        <span class="message-date"> {{message.date | date:'yyyy-MM-dd' }}</span>
+      </div>
+    </div>
+  }
+}
+
+
+@if(searchService.filteredChannels.length > 0){
+  <div class="click-contain">
+    <span>{{ searchService.filteredChannels.length }}</span>
+    <span (click)="toggleView('channels')"> Gefundene Channels</span>
+  </div>
+}
+
+@if( showChannels){
+  @for (channel of searchService.filteredChannels; track $index) {
+    <div class="search-results-contain">
+      <div class="search-results-wrapper" (click)="this.redirectService.goToChannel(channel)">
+        <span>{{channel.title }} </span>
+      </div>
+    </div>
+  }
+}
+
+
+@if(getTotalMessages() > 0){
+  <div class="click-contain">
+    <span>{{ getTotalMessages()}}</span>
+    <span (click)="toggleView('messagesInChannels')"> Gefundene Nachrichten in Channels</span>
+  </div>
+}
+
+@if(showMessagesInChannels){
+  @for (channelWithMessages of searchService.filteredMessagesInChannels; track $index){
+    <div class="search-results-contain">
+      <div *ngFor="let message of channelWithMessages.messages" class="search-results-wrapper message"
+        (click)="this.redirectService.goToMessageInChannel( message.messageID ,channelWithMessages.channel)">
+        <span class="sender-name">Von: {{ message.senderName }}</span>
+        <span class="message-content">Nachricht: {{ message.content }}</span>
+        <span class="message-date"> {{ message.date | date:'yyyy-MM-dd' }}</span>
+      </div>
+    </div>
+  }
+}
+
+
+@if (getTotalAnswers() > 0) {
+  <div class="click-contain">
+    <span>{{getTotalAnswers()}} </span>
+    <span (click)="toggleView('channelsThreads')"> Gefundene Antworten in Channels</span>
+  </div>
+}
+
+@if(showMesagesInChannelThreads){
+  @for (channelWithMessages of searchService.filteredMessagesInChannels; track $index){
+    <div class="search-results-contain">
+      <div *ngFor="let message of channelWithMessages.answers" id="{{channelWithMessages.answers.length}}">
+        <div class="search-results-wrapper message"
+          (click)="this.redirectService.openThreadInChannel(message, message.messageID, channelWithMessages.channel)">
+          <span class="sender-name">Von: {{ message.senderName }}</span>
+          <span class="message-content">Nachricht: {{ message.content }}</span>
+          <span class="message-date"> {{ message.date | date:'yyyy-MM-dd' }}</span>
+        </div>
+      </div>
+    </div>
+  }
+}

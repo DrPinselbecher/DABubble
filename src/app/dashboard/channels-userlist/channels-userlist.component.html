@@ -1,0 +1,26 @@
+<mat-card appearance="outlined">
+    <header *ngIf="viewportService.width >= 1250" class="devspace-header">
+        <div class="image-title-contain">
+            <img src="assets/img/workspace_logo.png" alt="devspace_logo">
+            <h1>Devspace</h1>
+        </div>
+        <mat-icon class="new-message-icon" fontIcon="rate_review"
+            (click)="messengerService.showNewMessage()"></mat-icon>
+    </header>
+
+    <header *ngIf="viewportService.width < 1020" class="search-header">
+        <div class="search-bar-contain" (click)="focusSearchInput()">
+            <input #searchInput placeholder="Suche nach..." type="text" (input)="onSearch()">
+            <div>
+                <mat-icon fontIcon="search" class="search-icon"></mat-icon>
+            </div>
+        </div>
+    </header>
+
+    <div class="scroll-contain">
+        <div class="channels-and-dm-contain">
+            <app-channel-list></app-channel-list>
+            <app-user-list></app-user-list>
+        </div>
+    </div>
+</mat-card>

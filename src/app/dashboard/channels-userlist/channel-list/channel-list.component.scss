@@ -1,0 +1,25 @@
+@use './../channels-userlist.component';
+
+.add-channel-icon {
+    transform: none !important;
+    font-weight: 100 !important;
+}
+
+.add-channel-btn {
+    mat-icon {
+        transition: transform 0.2s ease !important;
+    }
+
+    &:hover {
+        .add-channel-icon {
+            transform: scale(1.1) !important;
+        }
+    }
+}
+
+span {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 207px;
+}

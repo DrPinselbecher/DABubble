@@ -1,0 +1,37 @@
+@defer () {
+<mat-radio-group class="channel-list" [ngClass]="getChannelListClass()" [(ngModel)]="pickChannel"
+    (scroll)="onScroll($event)" (change)="resetLowerGroup()">
+    @for (channel of channelList; track $index) {
+    <mat-radio-button *ngIf="channel.title !==  'Allgemein'" [value]="channel.title">
+        <span class="radio-default-txt">Alle Mitglieder von <span class="radio-value-txt">{{ channel.title }}</span>
+            hinzufügen</span>
+    </mat-radio-button>
+    }
+</mat-radio-group>
+<mat-radio-group [(ngModel)]="selectInput" (change)="resetUpperGroup()" style="position: relative;">
+    <mat-radio-button [value]="true">
+        <span class="radio-default-txt">
+            Bestimmte Leute hinzufügen hinzufügen</span>
+    </mat-radio-button>
+    <div *ngIf="selectInput || !endAnimation" [ngClass]="{'slideInFromTop': selectInput, 'slideOutToTop': !selectInput}"
+        class="add-specific-member-contain" (wheel)="onWheel($event)" (animationstart)="scrollToRightAfterAnimation()">
+        <mat-chip-grid #chipGrid>
+            <div class="chip-contain" *ngFor="let member of memberSourceService.membersSource(); let i = index">
+                <img src="{{ member.avatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a' }}" alt="user_img">
+                <span>{{ member.username }}</span>
+                <div class="icon-wrapper">
+                    <mat-icon *ngIf="i !== 0" (mousedown)="remove(member)" fontIcon="close"></mat-icon>
+                </div>
+            </div>
+        </mat-chip-grid>
+        <input #userInput autocomplete="off" placeholder="Name..." [matChipInputFor]="chipGrid"
+            (input)="searchUserByName($event)" (keydown)="onKeyDown($event)" />
+    </div>
+    <app-filtred-list [filteredUsers]="filteredUsers" [highlightedIndex]="highlightedIndex"
+        (userSelected)="onUserAdded($event)">
+    </app-filtred-list>
+</mat-radio-group>
+<video *ngIf="needsToAddScroll()" [ngClass]="{'scroll-up': scrolledToEnd}" autoplay loop muted
+    src="assets/icons/scroll_animation.mp4">
+</video>
+}

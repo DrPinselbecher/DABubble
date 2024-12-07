@@ -1,0 +1,39 @@
+<div id="dmTab">
+    <div class="tab-header">
+        <div (click)="listHandlingService.toggleDirectMessages()" class="arrow-tab-title-contain">
+            <div>
+                <mat-icon id="dmIcon" class="drop-down-icon" fontIcon="arrow_right"></mat-icon>
+            </div>
+            <div class="channels-title-contain">
+                <mat-icon class="tab-icon" fontIcon="people"></mat-icon>
+                <span>Direktnachrichten</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="btns-contain max-height-contain"
+    *ngIf="listHandlingService.isDirectMessagesOpen || listHandlingService.isCloseDirectMessagesSection" [ngStyle]="{
+        'max-height': listHandlingService.isDirectMessagesOpen ? getDMMaxHeight() + 'px' : '0',
+        'transition': listHandlingService.isManualToggle ? getDMTransitionDuration() : 'none'
+    }">
+
+    <button *ngFor="let user of this.listHandlingService.userList; let i = index"
+        [ngStyle]="{'animation-delay': listHandlingService.isManualToggle ? getAnimationDelayDM(i) + 's' : '0s'}"
+        (click)="focusUser(user)" [ngClass]="{
+            'focus-btn': user.isFocus || user.userID === listHandlingService.focusedUserId,
+            'blob-in': listHandlingService.isDirectMessagesOpen && listHandlingService.isManualToggle,
+            'blob-out': listHandlingService.isCloseDirectMessagesSection && !listHandlingService.isDirectMessagesOpen && listHandlingService.isManualToggle
+        }">
+
+        <div class="profile-img-wrapper">
+            <img src="{{ user.avatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a' }}" alt="user_avatar_img">
+            <div [ngClass]="{'status-online-icon': user.userStatus == 'on'}"></div>
+            <div [ngClass]="{'status-offline-icon': user.userStatus == 'off'}"></div>
+            <div [ngClass]="{'status-busy-icon': user.userStatus == 'busy'}"></div>
+        </div>
+
+        <span class="username-txt">{{ user.username }}</span>
+        <span *ngIf="authService.currentUserSig()?.username === user.username" style="margin-left: -5px;">(Du)</span>
+    </button>
+</div>

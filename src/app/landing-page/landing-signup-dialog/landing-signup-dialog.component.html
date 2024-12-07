@@ -1,0 +1,76 @@
+<section>
+  <app-logo></app-logo>
+  <div class="login">
+    <div class="arrow-title">
+      <mat-icon routerLink="/" fontIcon="arrow_back" class="arrow-back" ></mat-icon>
+      <h1>Konto erstellen</h1>
+    </div>
+    
+    <p>Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
+    
+  <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+    
+      <div class="form-group" [ngClass]="{'focused': isFocused.username}">
+        <mat-icon matPrefix
+          [ngClass]="{'active-icon': isFocused.username, 'error-icon': accountForm.get('username')?.invalid && accountForm.get('username')?.touched}"
+          class="mat-icon-gray">person</mat-icon>
+        <input type="text" matInput formControlName="username" placeholder="Name und Nachname"
+          (focus)="onInputFocus('username')" (blur)="onInputBlur('username')"
+          [ngClass]="{'input-error': accountForm.get('username')?.invalid && accountForm.get('username')?.touched}">
+        <div class="error-message" *ngIf="accountForm.get('username')?.invalid && accountForm.get('username')?.touched">
+          <span *ngIf="accountForm.get('username')?.hasError('required')">
+            Geben Sie ein <strong>Name</strong> und ein <strong>Nachname</strong> ein.
+          </span>
+          <span *ngIf="accountForm.get('username')?.hasError('pattern')">
+            Geben sie mindestens<strong> zwei Wörtern </strong> und max. <strong>23 Zeichen </strong> ein.
+          </span>
+        </div>
+      </div>
+    
+      <div class="form-group" [ngClass]="{'focused': isFocused.email}">
+        <mat-icon matPrefix
+          [ngClass]="{'active-icon': isFocused.email, 'error-icon': accountForm.get('email')?.invalid && accountForm.get('email')?.touched}"
+          class="mat-icon-gray">email</mat-icon>
+        <input type="email" matInput formControlName="email" placeholder="max@muster.de" maxlength="25"
+          (focus)="onInputFocus('email')" (blur)="onInputBlur('email')"
+          [ngClass]="{'input-error': accountForm.get('email')?.invalid && accountForm.get('email')?.touched}">
+        <div class="error-message" *ngIf="accountForm.get('email')?.invalid && accountForm.get('email')?.touched">
+          <span *ngIf="accountForm.get('email')?.hasError('pattern')">Falsches <strong>E-Mail</strong></span>
+          <span *ngIf="accountForm.get('email')?.hasError('required')">Geben Sie ein <strong>E-Mail</strong> ein</span>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{'focused': isFocused.password}">
+        <mat-icon matPrefix
+          [ngClass]="{'active-icon': isFocused.password, 'error-icon': accountForm.get('password')?.invalid && accountForm.get('password')?.touched}"
+          class="mat-icon-gray">lock</mat-icon>
+        <input type="password" matInput formControlName="password" placeholder="Passwort" maxlength="25"
+          (focus)="onInputFocus('password')" (blur)="onInputBlur('password')"
+          [ngClass]="{'input-error': accountForm.get('password')?.invalid && accountForm.get('password')?.touched}">
+        <div class="error-message" *ngIf="accountForm.get('password')?.invalid && accountForm.get('password')?.touched">
+          <span *ngIf="accountForm.get('password')?.hasError('required')">Geben Sie ein <strong>Passwort</strong> ein</span>
+          <span *ngIf="accountForm.get('password')?.hasError('pattern')">  Min <strong> 8</strong> Zeichen z.B. <strong>Abc123!.</strong> </span>
+        </div>
+      </div>
+
+      <div class="form-group checkbox-group bg-white">
+        <input type="checkbox" id="privacyPolicy" formControlName="privacyPolicy"
+        (focus)="onInputFocus('checkbox')" (blur)="onInputBlur('checkbox')"
+          [ngClass]="{'input-error': accountForm.get('privacyPolicy')?.invalid && accountForm.get('privacyPolicy')?.touched}">
+        <label for="privacyPolicy">
+          Ich stimme der <a routerLink="/privacy-policy">Datenschutzerklärung</a> zu.
+        </label>
+        <div *ngIf="accountForm.get('privacyPolicy')?.touched && accountForm.get('privacyPolicy')?.invalid" class="error-message checkbox-error">
+          Bitte stimmen Sie der <strong>Datenschutzerklärung</strong> zu.
+        </div>
+        <div class="global-error-message" [ngClass]="{'show-error': errorMessage}">
+          <span>{{ errorMessage }}</span>
+        </div>
+      </div>
+
+      <button type="submit" mat-flat-button class="primary button"  [disabled]="accountForm.invalid">Weiter</button>
+
+    </form>
+  </div>
+  <app-links></app-links>
+</section>

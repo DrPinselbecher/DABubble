@@ -1,0 +1,17 @@
+<section>
+  <app-start-animation *ngIf="showAnimation"></app-start-animation> 
+  <div class="logo-section" >
+    <div *ngIf="!showLogo" style="width: 300px; color: transparent;">Hallo</div>
+    <app-logo  *ngIf="showLogo"></app-logo > 
+    <app-landing-login-register-button class="register-over-650px"></app-landing-login-register-button>
+    <div class="place-for-logo" >|</div>
+  </div>
+  
+  
+  <app-landing-login-dialog></app-landing-login-dialog>
+  <app-landing-login-register-button class="register-under-650px"></app-landing-login-register-button>
+  <app-links></app-links>
+</section>
+
+
+

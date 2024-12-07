@@ -1,0 +1,200 @@
+.main-contain {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100vw;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    background-color: #ECEEFE;
+    padding: 20px 0 20px 20px;
+    overflow: hidden;
+}
+
+mat-drawer-content {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    background-color: #ECEEFE;
+    padding: 0 20px;
+}
+
+section {
+    display: flex;
+    flex: 1;
+    gap: 20px;
+    height: 100%;
+    overflow: hidden;
+}
+
+mat-drawer-container {
+    flex: 1;
+    display: flex;
+    height: 100%;
+    background-color: transparent !important;
+}
+
+mat-drawer {
+    width: max-content !important;
+    background-color: transparent !important;
+}
+
+app-messenger {
+    flex: 1 1 auto;
+    width: 100%;
+}
+
+
+
+.toggle-btn {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+    left: 0;
+    background-color: white;
+    border: none;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    box-shadow: 4px 4px 7px 0px #00000033;
+    pointer-events: auto;
+    z-index: 1;
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    transition: height 0.1s ease, color 80ms ease, bottom 0.1s ease !important;
+}
+
+.toggle-btn:hover {
+    cursor: pointer;
+    color: #444DF2;
+}
+
+.toggle-btn.open-btn {
+    height: 310px;
+    width: 60px;
+    bottom: 170px;
+}
+
+.toggle-btn.close-btn {
+    height: 347px;
+    width: 60px;
+    bottom: 150px;
+}
+
+mat-icon {
+    pointer-events: none;
+    transition: color 80ms ease !important;
+    font-size: 24px !important;
+}
+
+span {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 500 !important;
+    line-height: 24px;
+    transition: color 80ms ease !important;
+    transform: rotate(180deg);
+    text-wrap: nowrap;
+}
+
+.txt-icon-contain {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    transition: height 3s ease !important;
+}
+
+.close-txt {
+    height: 347px;
+}
+
+.open-txt {
+    height: 330px;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap: 32px;
+    background-color: #ECEEFE;
+}
+
+app-new-message {
+    width: 100%;
+    height: 100%;
+}
+
+.loading-text {
+    font-size: 32px;
+    font-weight: 500;
+    color: #444DF2;
+    padding: 10px 10px;
+    text-align: center;
+    border: 1px solid #444DF2;
+    border-radius: 30px;
+    line-height: 32px;
+    width: 90%;
+}
+
+.responsive-main-contain {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100vw;
+    max-width: 100%;
+    height: 100vh;
+    background-color: #ECEEFE;
+    overflow: hidden;
+    padding: 20px;
+
+    @media(max-width:460px) {
+        gap: 0;
+        padding: 10px;
+    }
+
+    app-channels-userlist {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+
+        @media(max-width:600px) {
+            padding: 0;
+        }
+    }
+}
+
+.p-bottom130 {
+    padding-bottom: 10px;
+}
+
+.p-bottom100 {
+    padding-bottom: 10px;
+}
+
+@media screen and (max-width: 1550px) {
+    app-thread {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        overflow: hidden;
+    }
+}
+
+@media screen and (max-width: 1020px) {
+    app-messenger {
+        height: 10%;
+    }
+}
+
+@media (max-width: 600px) {
+    .loading-text {
+        font-size: 24px;
+    }
+}

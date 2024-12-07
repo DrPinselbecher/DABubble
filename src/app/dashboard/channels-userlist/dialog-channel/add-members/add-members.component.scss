@@ -1,0 +1,116 @@
+@use './../title-description/title-description.component';
+@use './../../user-list/user-list.component';
+
+.dialog-add-member {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+mat-radio-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    pointer-events: auto;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    overflow: visible;
+
+    mat-radio-button {
+        pointer-events: auto;
+    }
+
+    span {
+        cursor: pointer;
+        pointer-events: auto;
+    }
+
+    .radio-default-txt {
+        font-size: 18px !important;
+        font-weight: 400 !important;
+        color: black !important;
+        line-height: 24.55px !important;
+        word-break: break-word;
+        width: 100%;
+        overflow: hidden;
+
+        @media(max-width:650px) {
+            font-size: 16px !important;
+            line-height: 18px !important;
+        }
+    }
+
+    .radio-value-txt {
+        color: #535AF1;
+    }
+}
+
+video {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    height: 100px;
+    transform: translateY(110%) translateX(-100px) rotate(0);
+    transition: transform 0.5s ease-in-out;
+}
+
+.scroll-up {
+    transform: translateY(110%) translateX(-100px) rotate(180deg);
+}
+
+.scrollable {
+    overflow-y: scroll;
+    scrollbar-width: none;
+    height: 124px;
+    z-index: 1;
+}
+
+app-filtred-list {
+    position: absolute;
+    bottom: -150px;
+    left: -40px;
+    z-index: 2;
+
+    @media(max-width:700px) {
+        left: -10vw;
+    }
+
+    @media(max-width:600px) {
+        left: -15vw;
+    }
+
+    @media(max-width:560px) {
+        left: -19vw;
+        transform: scale(0.9);
+        bottom: -135px;
+    }
+
+    @media(max-width:490px) {
+        left: -22vw;
+        bottom: -137px;
+    }
+
+    @media(max-width:460px) {
+        transform: scale(0.8);
+        left: -20vw;
+        bottom: -120px;
+    }
+
+    @media(max-width:425px) {
+        left: -24vw;
+    }
+
+    @media(max-width:400px) {
+        left: -21vw;
+    }
+
+    @media(max-width:375px) {
+        left: -33vw;
+    }
+
+    @media(max-width:360px) {
+        left: -36vw;
+    }
+}

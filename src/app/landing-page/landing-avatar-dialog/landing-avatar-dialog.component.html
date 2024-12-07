@@ -1,0 +1,45 @@
+<section>
+  <app-logo></app-logo>
+  
+  <div class="login">
+    <div class="arrow-title">
+      <mat-icon routerLink="/" fontIcon="arrow_back" class="arrow-back"></mat-icon>
+      <h1>Wähle deinen Avatar</h1>
+    </div>
+    
+    <div class="choose-avatar">
+    
+      <img class="big-avatar" (click)="fileInput.click()"  [src]="imgUpload.filePreview || selectedAvatar" alt="Selected Avatar">
+      <input type="file" #fileInput accept="image/*" (change)="imgUpload.onFileSelected($event)" style="display: none;">
+      <div class="name-container">
+        <span class="name">{{ tempUserData?.username?.toUpperCase() }}</span>
+        <span>Aus der Liste wählen</span>
+      </div>
+
+     
+      <div class="avatars">
+        @for(avatar of avatars; track avatar) {
+          <img class="small-avatar" 
+               src="{{avatar}}" 
+               alt="Avatar {{avatar}}"
+               (click)="onSelectAvatar(avatar)">
+        }
+      </div>
+
+      <div class="self-image">
+        <p>eigenes Bild verwenden</p>
+        <button mat-flat-button class="secondary" (click)="fileInput.click()">Datei Hochladen</button>
+        <input type="file" #fileInput accept="image/*" (change)="imgUpload.onFileSelected($event)" style="display: none;">
+      </div>
+    </div>
+
+
+    <button mat-flat-button [disabled]="isSubmitting || !isAvatarSelected() || showSuccessMessage" (click)="onContinue()" class="primary next">Weiter</button>
+  </div>
+
+  
+  @if(showSuccessMessage) {
+    <button class="response primary default">Konto erfolgreich erstellt</button>
+  }
+  <app-links></app-links>
+</section>

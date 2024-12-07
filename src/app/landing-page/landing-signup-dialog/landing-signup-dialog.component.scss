@@ -1,0 +1,149 @@
+@import '../shared-landing-styles.scss';
+
+
+
+section{
+  width: 100vw;
+  max-width: 100%;
+  min-height: 100vh;
+  background-color: #ECEEFE;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.checkbox-group {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+label{
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  &:hover{
+    cursor: pointer;
+  }
+}
+
+
+label a{
+  padding: 5px;
+  color: #797EF3;
+  border-radius: 30px;
+  &:hover{
+    background-color: #ECEEFE;
+  }
+}
+
+.checkbox-error{
+  bottom: -15px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px !important;
+  height: 18px !important;
+  padding-left: 32px;
+  background: transparent;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  outline: 2px solid #797EF3;
+  transition: all 0.2s ease-in-out;
+  padding: 0px;
+  margin: 0;
+  animation: spin ease-in-out 2s infinite;
+  &:checked {
+    background: transparent;
+    border-color: #797EF3;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0px;
+      left: 4px;
+      width: 8px;
+      height: 14px;
+      border: solid $purple;
+      border-width: 0 2px 2px 0;
+      transform: rotate(40deg);
+      &:hover{
+        border-width: 0 3px 3px 0;
+      }
+    }
+    
+  }
+  &:hover {
+    box-shadow:  0px 0px 8px 0px $purple; 
+    scale: 1.1;
+    cursor: pointer;
+    background-color: #ECEEFE;
+    background-size: 150%;
+  }
+}
+
+@keyframes spin {
+  from {
+     
+     transform:rotate3d(0.5, 0.5, 1, 0deg);
+    }
+  to { 
+     transform:rotate3d(1, 1, 1, 360deg);
+   }
+}
+
+.button{
+  width: fit-content;
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+}
+
+
+.bg-white{
+  background-color: white;
+  padding-left: 24px;
+}
+
+@media (max-width: 500px){
+  h1{
+    font-size: 36px;
+  }
+  p{
+    font-size: 16px;
+  }
+  .bg-white{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  label{
+    font-size: 16px;
+  }
+  
+}
+
+@media (max-width:430px){
+  .arrow-title{
+    gap: 0px;
+  }
+  h1{
+    font-size: 32px;
+  }
+ 
+ 
+  label{
+    flex-wrap: wrap;
+    a{
+      padding:  0px 3px;
+    }
+  }
+}
+
+@media (max-height: 1000px){
+  .form-group{
+    margin-bottom: 10px;
+    height: 40px;
+  }
+}

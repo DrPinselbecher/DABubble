@@ -1,0 +1,110 @@
+main {
+    background-color: #ECEEFE;
+    height: 100vh;
+}
+
+app-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    ::ng-deep .logo h2 {
+        display: none !important;
+    }
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100vw;
+    max-width: 100%;
+    overflow-y: auto;
+    padding-top: 156px;
+    padding-bottom: 156px;
+}
+
+mat-card {
+    display: flex;
+    padding: 48px 56px 48px 56px;
+    gap: 32px;
+    width: 70vw;
+    height: 469px;
+    background-color: white;
+    border: none;
+    box-shadow: 0px 2px 10px 0px #00000014;
+    height: max-content;
+    overflow: hidden;
+    hyphens: auto;
+}
+
+mat-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 0;
+}
+
+h1 {
+    color: #444DF2;
+    font-size: 46px;
+    font-weight: 700;
+    line-height: 55.2px;
+}
+
+h2 {
+    color: #444DF2;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 38.4px;
+}
+
+h3 {
+    color: #444DF2;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 28px;
+}
+
+strong {
+    color: #444DF2;
+}
+
+p {
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+@media (max-width: 1200px) {
+    mat-card {
+        width: 90vw;
+        overflow: auto;
+        scrollbar-width: none;
+    }
+    section{
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    app-logo{
+        position: relative;
+        padding-bottom: 20px;
+    }
+
+    ::ng-deep .logo{
+        justify-content: center !important;
+        padding-left: 0px !important;
+        padding-top: 0px !important;
+    }
+}
+
+@media (max-width: 500px){
+    mat-card{
+        padding: 20px 20px 20px 20px;
+    }
+}
