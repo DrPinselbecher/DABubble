@@ -12,12 +12,12 @@
             (inputValueChange)="inputValueChange($event)"></app-add-members>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button *ngIf="!showAddMembersDialog && !channelTitleExist() && !isGuestUnnamed()"
+        <button *ngIf="!showAddMembersDialog && !channelTitleExist() && !authService.isAnonymous()"
             [disabled]="isTitleInputEmpty() || channelTitleExist()" class="primary default" mat-button
             (click)="showAddMembers()">
             weiter
         </button>
-        <button *ngIf="!showAddMembersDialog && channelTitleExist() && !isGuestUnnamed()"
+        <button *ngIf="!showAddMembersDialog && channelTitleExist() && !authService.isAnonymous()"
             [disabled]="isTitleInputEmpty() || channelTitleExist()" class="primary default" mat-button
             (click)="showAddMembers()">
             Channel existiert bereits
@@ -27,10 +27,10 @@
             class="primary default" mat-button>
             Erstellen
         </button>
-        <button *ngIf="!showAddMembersDialog && isGuestUnnamed()" (click)="addChannel()"
+        <button *ngIf="!showAddMembersDialog && authService.isAnonymous()" (click)="addChannel()"
             [disabled]="selectInput && memberSourceService.membersSource().length === 0 || memberSourceService.membersSource().length == 0"
             class="primary default" mat-button>
-            Bitte ändere deinen Namen
+            Bitte logge dich ein
         </button>
     </mat-dialog-actions>
 </div>
