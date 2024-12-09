@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { LogoComponent } from '../landing-shared/logo/logo.component';
 import { LinksComponent } from '../landing-shared/links/links.component';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { Router, RouterLink, RouterLinkActive, RouterModule, } from '@angular/router';
+import { Router, RouterLink, RouterModule, } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { AuthserviceService } from '../services/authservice.service';
@@ -13,7 +13,7 @@ import { AuthserviceService } from '../services/authservice.service';
   selector: 'app-landing-reset-send-email',
   standalone: true,
   imports: [CommonModule, LogoComponent, LinksComponent, MatIcon,
-    MatIconModule, RouterLink, RouterLinkActive, FormsModule, ReactiveFormsModule, RouterModule, MatButtonModule, MatButton],
+    MatIconModule, RouterLink, FormsModule, ReactiveFormsModule, RouterModule, MatButtonModule, MatButton],
   templateUrl: './landing-reset-send-email.component.html',
   styleUrl: './landing-reset-send-email.component.scss'
 })
@@ -70,11 +70,11 @@ export class LandingResetSendEmailComponent {
     }
   }
 
-/**
- * Handles errors returned from the AuthService when resetting the password.
- * Sets the error message based on the error code received.
- * Resets the showSuccessMessage to false.
- */
+  /**
+   * Handles errors returned from the AuthService when resetting the password.
+   * Sets the error message based on the error code received.
+   * Resets the showSuccessMessage to false.
+   */
   showError(error: any) {
     switch (error.code) {
       case 'auth/invalid-email':
