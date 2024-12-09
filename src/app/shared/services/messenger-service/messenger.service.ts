@@ -3,11 +3,8 @@ import { UserInterface } from '../../../landing-page/interfaces/userinterface';
 import { Channel } from '../../interfaces/channel';
 import { Message } from '../../../models/message.class';
 import { ThreadService } from '../thread-service/thread.service';
-import { FirebaseMessengerService } from '../firebase-services/firebase-messenger.service';
-import { User } from '@angular/fire/auth';
 import { FirestoreService } from '../firebase-services/firestore.service';
 import { Subject } from 'rxjs';
-import { MentionUserInterface } from '../../interfaces/mention-user-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +79,7 @@ export class MessengerService {
 
 
   scrollToBottom(container: any) {
-    if (container) {      
+    if (container) {
       container.nativeElement.scrollTop = container.nativeElement.scrollHeight;
     }
   }
