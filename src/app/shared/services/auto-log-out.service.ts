@@ -1,7 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { AuthserviceService } from '../../landing-page/services/authservice.service';
-import { Router } from '@angular/router';
-import { doc, updateDoc, Firestore } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 
 
 const MINUTES_UNITL_AUTO_LOGOUT = 5;
@@ -16,7 +15,6 @@ export class AutoLogoutService {
   tabHiddenTimeout: any;
   constructor(
     private auth: AuthserviceService,
-    private router: Router,
     private ngZone: NgZone,
     private firestore: Firestore
   ) {
@@ -76,7 +74,7 @@ export class AutoLogoutService {
     this.ngZone.run(() => {
       if (isTimeout) {
         this.auth.logout();
-        this.router.navigate(['/']);
+        window.location.assign('/');
       }
     });
   }
@@ -89,9 +87,9 @@ export class AutoLogoutService {
   initVisibilityListener() {
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
-        this.startTabHiddenTimer(); 
+        this.startTabHiddenTimer();
       } else {
-        this.clearTabHiddenTimer(); 
+        this.clearTabHiddenTimer();
       }
     });
   }
@@ -100,11 +98,11 @@ export class AutoLogoutService {
    * Starts a timer to log out the user after 5 minutes of tab being hidden.
   */
   startTabHiddenTimer() {
-    this.clearTabHiddenTimer(); 
+    this.clearTabHiddenTimer();
     this.tabHiddenTimeout = setTimeout(() => {
       this.ngZone.run(() => {
         this.auth.logout();
-        this.router.navigate(['/']);
+        window.location.assign('/');
       });
     }, TAB_HIDDEN_TIMEOUT);
   }
@@ -133,14 +131,14 @@ export class AutoLogoutService {
     }
     this.ngZone.run(() => {
       this.auth.logout();
-      this.router.navigate(['/']);
+      window.location.assign('/');
     });
   }
 }
-          
-          
 
-    
+
+
+
 
 
 
