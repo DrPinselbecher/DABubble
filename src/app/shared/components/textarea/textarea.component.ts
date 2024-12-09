@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, ViewChild } from '@angular/core';
 import { FirebaseMessengerService } from '../../services/firebase-services/firebase-messenger.service';
 import { MessengerService } from '../../services/messenger-service/messenger.service';
 import { CommonModule } from '@angular/common';
@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ThreadService } from '../../services/thread-service/thread.service';
 import { EmojiBoardComponent } from '../emoji-board/emoji-board.component';
 import { MatIcon } from '@angular/material/icon';
-import { provideStorage, getStorage, Storage } from '@angular/fire/storage';
+import { Storage } from '@angular/fire/storage';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { AuthserviceService } from '../../../landing-page/services/authservice.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,9 +16,7 @@ import { FirestoreService } from '../../services/firebase-services/firestore.ser
 import { UserInterface } from '../../../landing-page/interfaces/userinterface';
 import { collection, doc, onSnapshot } from '@firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
-import { user } from '@angular/fire/auth';
 import { MentionUserInterface } from '../../interfaces/mention-user-interface';
-import { Message } from '../../../models/message.class';
 import { MentionModule } from 'angular-mentions';
 import { Subscription } from 'rxjs';
 import { ViewportService } from '../../services/viewport.service';
@@ -92,8 +90,8 @@ export class TextareaComponent {
     });
     this.subscription = this.messengerService.textareaThread.subscribe(() => {
       if (this.textareaThread) {
+        if (this.authService.isAnonymous()) return;
         this.textareaThread.nativeElement.focus();
-
       }
     });
 
