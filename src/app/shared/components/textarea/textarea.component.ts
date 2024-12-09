@@ -277,6 +277,23 @@ export class TextareaComponent {
     this.ngOnInit();
   }
 
+  async uploadFilesToEnter(messenger: any, e: Event) {
+    e.preventDefault();
+    let originalContent = this.getInitialContent(messenger);
+    const folderName = `uploads/${this.messengerService.user.userID}/`;
+    for (const file of this.selectedFiles) {
+      try {
+        const url = await this.uploadFileToStorage(folderName, file);
+        originalContent = this.appendFileToContent(originalContent, url, file);
+      } catch (error) {
+        console.error('Upload error for file: ', file.name, error);
+      }
+    }
+    this.updateContent(messenger, originalContent);
+    this.selectedFiles = [];
+    this.ngOnInit();
+    this.firebaseMessenger.content = '';
+  }
   /**
    * Retrieves the initial content based on the type of messenger.
    * 

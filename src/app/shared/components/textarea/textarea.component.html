@@ -13,9 +13,10 @@
         </div>
     </div>
     <div class="interaction-div">
-        <textarea [(ngModel)]="firebaseMessenger.content" name="textareaMessenger" #textareaMessenger
-            (input)="checkForMention(firebaseMessenger.content)" [mentionConfig]="mentionConfig"
-            pattern="^[\s\S]*\S[\s\S]*$" placeholder='{{chatOrChannelTxt()}}' #texterea="ngModel" required></textarea>
+        <textarea (keydown.enter)="uploadFilesToEnter(messenger,$event)" [(ngModel)]="firebaseMessenger.content"
+            name="textareaMessenger" #textareaMessenger (input)="checkForMention(firebaseMessenger.content)"
+            [mentionConfig]="mentionConfig" pattern="^[\s\S]*\S[\s\S]*$" placeholder='{{chatOrChannelTxt()}}'
+            #texterea="ngModel" required></textarea>
         <div id="interaction">
             <div id="button-container-left">
                 <p>
@@ -67,8 +68,9 @@
         </div>
     </div>
     <div class="interaction-div" [ngClass]="{'p-none': authService.isAnonymous()}">
-        <textarea [(ngModel)]="firebaseMessenger.answerContent" name="textareaThread" #textareaThread
-            (input)="checkForMention(firebaseMessenger.answerContent)" [mentionConfig]="mentionConfig"
+        <textarea (keydown.enter)="uploadFiles('thread')" [(ngModel)]="firebaseMessenger.answerContent"
+            name="textareaThread" #textareaThread (input)="checkForMention(firebaseMessenger.answerContent)"
+            [mentionConfig]="mentionConfig"
             [placeholder]="authService.isAnonymous() ? 'Bitte logge dich!' : 'Antworten...'" #texterea="ngModel"
             pattern="^[\s\S]*\S[\s\S]*$" required></textarea>
         <div id="interaction">
