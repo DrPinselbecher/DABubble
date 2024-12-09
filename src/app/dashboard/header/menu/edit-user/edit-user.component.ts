@@ -105,7 +105,7 @@ export class EditUserComponent implements OnInit {
    * Returns true if the name is valid, otherwise false.
    */
   isNameValid(): boolean {
-    let namePattern = /^[a-zA-Z]{1,}\s[a-zA-Z]{1,}$/;
+    let namePattern = /^(?=.{1,23}$)([a-zA-ZÀ-ÖØ-öø-ÿ]{1,23}\s[a-zA-ZÀ-ÖØ-öø-ÿ]{1,23})$/;
     if (!namePattern.test(this.inputName)) {
       this.errorMessage = 'Bitte geben Sie Ihren Vornamen und Nachnamen ein.';
       this.setInitialValues();
