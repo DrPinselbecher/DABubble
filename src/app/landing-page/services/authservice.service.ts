@@ -23,7 +23,7 @@ export class AuthserviceService {
   guestPassword = 'abcdABCD1234!"§$';
   tempUserData: UserInterface | null = null;
   logoutPromise: Promise<void>;
-  defaultAvatarURL = 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a';
+  defaultAvatarURL = 'https://firebasestorage.googleapis.com/v0/b/dabubble-7abb7.firebasestorage.app/o/avatars%2Favatar-clean.png?alt=media&token=198df0f0-967b-4652-9ec8-c0ea54c69009';
 
   constructor() {
     onAuthStateChanged(this.firebaseAuth, (user) => {
@@ -451,7 +451,7 @@ export class AuthserviceService {
       password: '',
       email: 'gast@gast.de',
       username: 'Neuer Gast',
-      avatar: 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a',
+      avatar: this.defaultAvatarURL,
       userStatus: 'on',
       isFocus: false,
     }
