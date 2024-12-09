@@ -100,17 +100,10 @@ export class TextareaComponent {
     });
   }
 
-
-  ngAfterViewInit(): void {
-
-
-  }
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.unsubChannelList;
   }
-
 
   checkForMention(content: any): void {
     this.mentionPersonBtnSrc = '';
@@ -118,7 +111,7 @@ export class TextareaComponent {
     const inputContent = content;
     const mentionIndex = inputContent.lastIndexOf('@');
     if (this.messengerService.openChannel) {
-      if (/\B@\w*$/.test(inputContent)) { // In diese IF kontrollorieren wir ob das @ am Anfang eines Wortes steht
+      if (/\B@\w*$/.test(inputContent)) {
         if (this.laodMentionUsers) {
           this.subChannelList();
           this.laodMentionUsers = false;
@@ -133,14 +126,13 @@ export class TextareaComponent {
         } else {
           this.mentionPersonView = false;
         }
-      } else if (/\B@\w*\s$/.test(inputContent)) { // In diese IF kontrollorieren wir ob nach dem @ (und weiter Zeichen) ein Leerzeichen steht;
+      } else if (/\B@\w*\s$/.test(inputContent)) {
         this.mentionPersonView = false;
       } else {
         this.mentionPersonView = false;
       }
     }
   }
-
 
   subChannelList() {
     const messegeRef = doc(collection(this.firestore, `channels`), this.messengerService.channel.channelID);
@@ -159,13 +151,11 @@ export class TextareaComponent {
         this.usersToMention.forEach((user) => {
           this.mentionConfig.items.push(user);
         });
-
       } else {
         console.error("doc is empty or doesn't exist");
       }
     })
   }
-
 
   getCleanJson(user: UserInterface[]) {
     let userJson = {
@@ -175,7 +165,6 @@ export class TextareaComponent {
     }
     return userJson;
   }
-
 
   openOrCloseMentionPersonView(src: string) {
     this.mentionPersonBtnSrc = src;
@@ -189,7 +178,6 @@ export class TextareaComponent {
       this.mentionPersonViewFromBtn = true;
     }
   }
-
 
   mentionUser(userJson: any, src: string) {
     const mentionText = `@${userJson.userName}`;
@@ -209,7 +197,6 @@ export class TextareaComponent {
       }
     }
     this.mentionPersonView = false;
-
   }
 
 
@@ -226,14 +213,12 @@ export class TextareaComponent {
     }
   }
 
-
   /**
    * Open or close the emoji board.
   */
   openOrCloseEmojiBoard() {
     this.showEmojiBoard = !this.showEmojiBoard;
   }
-
 
   /**
    * Handles the selection of files from an input event.
@@ -253,7 +238,6 @@ export class TextareaComponent {
     }
   }
 
-
   /**
    * Opens a dialog with a preview of the given file.
    * 
@@ -269,7 +253,6 @@ export class TextareaComponent {
       this.selectedFileToView = null;
     });
   }
-
 
   /**
    * Asynchronously uploads all selected files to Firebase Storage, updates the message content 
@@ -294,7 +277,6 @@ export class TextareaComponent {
     this.ngOnInit();
   }
 
-
   /**
    * Retrieves the initial content based on the type of messenger.
    * 
@@ -304,7 +286,6 @@ export class TextareaComponent {
   private getInitialContent(messenger: any): string {
     return messenger === 'messenger' ? this.firebaseMessenger.content : this.firebaseMessenger.answerContent;
   }
-
 
   /**
    * Uploads a file to Firebase Storage and returns the download URL.
@@ -320,7 +301,6 @@ export class TextareaComponent {
     return await getDownloadURL(snapshot.ref);
   }
 
-
   /**
    * Appends an image or file link to the given content based on the file type.
    */
@@ -329,7 +309,6 @@ export class TextareaComponent {
     const imgTag = this.getImageTag(url, file.name, fileExtension);
     return `${originalContent}\n\n${imgTag}`;
   }
-
 
   /**
    * Generates an HTML image tag or link for a file based on its extension.
@@ -341,7 +320,6 @@ export class TextareaComponent {
       return `<a href="${url}" target="_blank"><img width="48px" height="48px" src="assets/icons/pdf.webp" alt="${fileName}"></a>`;
     }
   }
-
 
   /**
    * Updates the content of the messenger or thread based on the provided messenger type.
@@ -398,7 +376,6 @@ export class TextareaComponent {
       }, 10);
     }
   }
-
 
   /**
    * Removes a file from the selected files array and UI.
