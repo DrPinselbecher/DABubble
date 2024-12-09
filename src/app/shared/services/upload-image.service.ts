@@ -14,7 +14,7 @@ export class UploadImageService {
   filePreview: string | ArrayBuffer | null = null;
   authService = inject(AuthserviceService);
   avatarChanged = new EventEmitter<string | null>();
-  firestore :Firestore = inject(Firestore)
+  firestore: Firestore = inject(Firestore)
 
 
   /**
@@ -51,7 +51,7 @@ export class UploadImageService {
     const blob = await this.drawImageToCanvas(img, width, height, file.type);
     return new File([blob], file.name, { type: file.type });
   }
-  
+
   /**
    * Reads a file as an image and resolves with the loaded image.
    * Rejects with an error if the image fails to load.
@@ -69,7 +69,7 @@ export class UploadImageService {
       reader.readAsDataURL(file);
     });
   }
-  
+
   /**
    * Calculates the dimensions of a given image to fit within a maximum
    * width and height, while maintaining the aspect ratio.
@@ -94,7 +94,7 @@ export class UploadImageService {
     }
     return { width, height };
   }
-  
+
   /**
    * Draws an image onto a canvas and compresses it to a blob.
    *
@@ -130,7 +130,7 @@ export class UploadImageService {
   async uploadUserAvatar(file: File): Promise<string> {
     try {
       const compressedFile = await this.compressImage(file);
-      const storageRef = ref(this.storage, `avatars/${compressedFile.name}`);
+      const storageRef = ref(this.storage, `users/${compressedFile.name}`);
       await uploadBytes(storageRef, compressedFile);
       const downloadUrl = await getDownloadURL(storageRef);
       return downloadUrl;
@@ -182,13 +182,13 @@ export class UploadImageService {
     const currentUser = this.authService.currentUserSig();
     if (currentUser) {
       try {
-        const userDocRef = doc(this.firestore, `users/${currentUser.userID}`);  
-        await updateDoc(userDocRef, { avatar: avatarUrl }); 
+        const userDocRef = doc(this.firestore, `users/${currentUser.userID}`);
+        await updateDoc(userDocRef, { avatar: avatarUrl });
         this.authService.currentUserSig.set({ ...currentUser, avatar: avatarUrl || this.authService.defaultAvatarURL });
       } catch (error) {
         console.error('Error updating avatar in Firestore:', error);
         throw error;
       }
     }
-}
+  }
 }

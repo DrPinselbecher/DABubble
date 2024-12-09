@@ -97,7 +97,7 @@ export class LandingAvatarDialogComponent {
     this.showSuccessMessage = true;
     setTimeout(() => {
       this.showSuccessMessage = false;
-      this.router.navigate(['/']);
+      window.location.assign('/');
     }, 2000);
   }
 
