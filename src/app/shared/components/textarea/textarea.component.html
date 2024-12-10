@@ -68,7 +68,7 @@
         </div>
     </div>
     <div class="interaction-div" [ngClass]="{'p-none': authService.isAnonymous()}">
-        <textarea (keydown.enter)="uploadFiles('thread')" [(ngModel)]="firebaseMessenger.answerContent"
+        <textarea (keydown.enter)="uploadFilesToEnter('thread',$event)" [(ngModel)]="firebaseMessenger.answerContent"
             name="textareaThread" #textareaThread (input)="checkForMention(firebaseMessenger.answerContent)"
             [mentionConfig]="mentionConfig"
             [placeholder]="authService.isAnonymous() ? 'Bitte logge dich!' : 'Antworten...'" #texterea="ngModel"
