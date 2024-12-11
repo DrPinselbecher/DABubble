@@ -37,6 +37,10 @@ input {
     &:focus {
         outline: none;
     }
+
+    &:disabled {
+        pointer-events: none !important;
+    }
 }
 
 .border-red {

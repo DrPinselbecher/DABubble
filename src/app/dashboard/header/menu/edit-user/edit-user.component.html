@@ -24,8 +24,8 @@
                 <mat-icon fontIcon="lock"></mat-icon>
                 <span>Passwort</span>
             </div>
-            <input #passwordInput="ngModel" type="password" autocomplete="off" maxlength="39" matInput
-                placeholder="Anmelde Passwort eingeben" [(ngModel)]="inputPassword">
+            <input #passwordInput="ngModel" [disabled]="emailInput.value.length == 0" type="password" autocomplete="off"
+                maxlength="39" matInput placeholder="Anmelde Passwort eingeben" [(ngModel)]="inputPassword">
         </div>
         }
         <div *ngIf="errorMessage" class="error-container">
