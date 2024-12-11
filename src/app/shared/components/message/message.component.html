@@ -2,7 +2,7 @@
     <div>{{ giveDateBack(message.date, 'dateInfo') }}</div>
     <div></div>
 </div>
-<section class="message" [ngStyle]="{'margin-top.px': messageIndex == 0 ? 10 : 30}"
+<section class="message"
     [ngClass]="{'message-from-you': message.senderID == authService.currentUserSig()?.userID, 'z-index': showEmojiBoard}"
     (mouseenter)="hoveredMessageId = messageIndex"
     (mouseleave)="hoveredMessageId = -1; hoveredMenu = false; closeEmojiBoard()">
