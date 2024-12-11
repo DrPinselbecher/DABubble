@@ -1,6 +1,7 @@
-import { Injectable, NgZone } from '@angular/core';
+import { inject, Injectable, NgZone } from '@angular/core';
 import { AuthserviceService } from '../../landing-page/services/authservice.service';
 import { Firestore } from '@angular/fire/firestore';
+import { Route, Router } from '@angular/router';
 
 
 const MINUTES_UNITL_AUTO_LOGOUT = 5;
@@ -13,6 +14,7 @@ const TAB_HIDDEN_TIMEOUT = 5 * 60 * 1000;
 export class AutoLogoutService {
   lastAction: number;
   tabHiddenTimeout: any;
+  router = inject(Router);
   constructor(
     private auth: AuthserviceService,
     private ngZone: NgZone,
@@ -67,12 +69,13 @@ export class AutoLogoutService {
     if (!this.auth.currentUserSig()) {
       return;
     }
+    const currentRoute = this.router.url;
     const now = Date.now();
     const timeleft = this.lastAction + MINUTES_UNITL_AUTO_LOGOUT * 60 * 1000;
     const diff = timeleft - now;
     const isTimeout = diff < 0;
     this.ngZone.run(() => {
-      if (isTimeout) {
+      if (isTimeout && currentRoute !== '/') {
         this.auth.logout();
         window.location.assign('/');
       }
