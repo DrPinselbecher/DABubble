@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
+    "@firebase/analytics": "^0.10.10",
     "angular-mentions": "^1.5.0",
     "firebase": "^10.14.1",
     "rxjs": "~7.8.0",
