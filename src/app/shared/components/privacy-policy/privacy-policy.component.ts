@@ -12,10 +12,15 @@ import { LogoComponent } from "../../../landing-page/landing-shared/logo/logo.co
     RouterLink,
     MatIconModule,
     LogoComponent
-],
+  ],
   templateUrl: './privacy-policy.component.html',
   styleUrl: './privacy-policy.component.scss'
 })
 export class PrivacyPolicyComponent {
 
+  constructor() { }
+
+  scrollTo(fragment: string) {
+    document.getElementById(fragment)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }

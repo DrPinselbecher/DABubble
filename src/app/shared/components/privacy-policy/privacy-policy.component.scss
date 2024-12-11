@@ -22,6 +22,7 @@ section {
     overflow-y: auto;
     padding-top: 156px;
     padding-bottom: 156px;
+    scrollbar-width: none;
 }
 
 mat-card {
@@ -83,7 +84,8 @@ p {
         overflow: auto;
         scrollbar-width: none;
     }
-    section{
+
+    section {
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
@@ -91,20 +93,43 @@ p {
         padding-bottom: 20px;
     }
 
-    app-logo{
+    app-logo {
         position: relative;
         padding-bottom: 20px;
     }
 
-    ::ng-deep .logo{
+    ::ng-deep .logo {
         justify-content: center !important;
         padding-left: 0px !important;
         padding-top: 0px !important;
     }
 }
 
-@media (max-width: 500px){
-    mat-card{
+#m4158,
+#m3,
+#mOverview,
+#m2427,
+#m27,
+#m25,
+#m24,
+#m12,
+#m10,
+#m225,
+#m367,
+#m432,
+#m451,
+#m182,
+#m263 {
+    scroll-margin-top: 50px;
+
+
+    @media (max-width: 800px) {
+        scroll-margin-top: 10px;
+    }
+}
+
+@media (max-width: 500px) {
+    mat-card {
         padding: 20px 20px 20px 20px;
     }
 }
