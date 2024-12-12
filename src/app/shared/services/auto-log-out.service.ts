@@ -69,13 +69,12 @@ export class AutoLogoutService {
     if (!this.auth.currentUserSig()) {
       return;
     }
-    const currentRoute = this.router.url;
     const now = Date.now();
     const timeleft = this.lastAction + MINUTES_UNITL_AUTO_LOGOUT * 1000;
     const diff = timeleft - now;
     const isTimeout = diff < 0;
     this.ngZone.run(() => {
-      if (isTimeout && currentRoute !== '/') {
+      if (isTimeout && this.router.url !== '/') {
         this.auth.logout();
       }
     });
@@ -88,7 +87,7 @@ export class AutoLogoutService {
    */
   initVisibilityListener() {
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
+      if (document.hidden && this.router.url !== '/') {
         this.startTabHiddenTimer();
       } else {
         this.clearTabHiddenTimer();
