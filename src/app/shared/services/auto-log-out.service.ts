@@ -70,7 +70,7 @@ export class AutoLogoutService {
       return;
     }
     const now = Date.now();
-    const timeleft = this.lastAction + MINUTES_UNITL_AUTO_LOGOUT * 1000;
+    const timeleft = this.lastAction + MINUTES_UNITL_AUTO_LOGOUT * 60 * 1000;
     const diff = timeleft - now;
     const isTimeout = diff < 0;
     this.ngZone.run(() => {
