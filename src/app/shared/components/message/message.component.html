@@ -7,7 +7,7 @@
     (mouseenter)="hoveredMessageId = messageIndex"
     (mouseleave)="hoveredMessageId = -1; hoveredMenu = false; closeEmojiBoard()">
     <div>
-        <img src="{{message.senderAvatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a'}}"
+        <img src="{{senderUser[0].avatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-7abb7.firebasestorage.app/o/avatars%2Favatar-clean.png?alt=media&token=198df0f0-967b-4652-9ec8-c0ea54c69009'}}"
             alt="Profile" id="img-avatar">
     </div>
     <div id="message-content" *ngIf="!editMessage">

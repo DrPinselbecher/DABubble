@@ -2,7 +2,7 @@
     <header>
         <div>
             <h4>Thread</h4>
-            <p #headerName>{{ headerSenderName }}</p>
+            <p #headerName>{{ threadService.headerSenderName }}</p>
         </div>
         <mat-icon (click)="closeThread()" *ngIf="viewportService.width < 1550">arrow_back</mat-icon>
         <mat-icon (click)="closeThread()" *ngIf="viewportService.width >= 1550">close</mat-icon>
@@ -11,11 +11,11 @@
         <div id="messages-container" class="threadContent" #content
             [ngStyle]="{'padding-top.px': firebaseMessenger.answers.length == 1 ? 100 : 20, 'padding-bottom.px': firebaseMessenger.answers.length == 0 ? 20 : 0}">
             <div class="message">
-                <img src="{{ threadService.messageToReplyTo.senderAvatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a' }}"
+                <img src="{{ threadService.senderUser[0].avatar || 'https://firebasestorage.googleapis.com/v0/b/dabubble-89d14.appspot.com/o/avatars%2Favatar-clean.png?alt=media&token=e32824ef-3240-4fa9-bc6c-a6f7b04d7b0a' }}"
                     alt="Profile">
                 <div id="message-content">
                     <div class="header">
-                        <h6 #messageToReplayName>{{ messageToReplaySenderName }}</h6>
+                        <h6 #messageToReplayName>{{ threadService.messageToReplaySenderName }}</h6>
                         <p>
                             {{ threadService.messageToReplyTo.date| date:'H:mm' }}
                             <span>Uhr</span>

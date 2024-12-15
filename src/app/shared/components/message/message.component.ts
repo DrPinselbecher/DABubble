@@ -17,6 +17,8 @@ import { Message } from '../../../models/message.class';
 import { TextareaServiceService } from '../../services/textarea-service/textarea-service.service';
 import { MentionUserInterface } from '../../interfaces/mention-user-interface';
 import { ViewportService } from '../../services/viewport.service';
+import { FirestoreService } from '../../services/firebase-services/firestore.service';
+import { UserInterface } from '../../../landing-page/interfaces/userinterface';
 
 @Component({
   selector: 'app-message',
@@ -32,7 +34,7 @@ import { ViewportService } from '../../services/viewport.service';
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss'
 })
-export class MessageComponent implements OnInit, OnDestroy{
+export class MessageComponent implements OnInit, OnDestroy {
   viewportService = inject(ViewportService);
   authService = inject(AuthserviceService);
   mesageparser = inject(MessageParserService);
@@ -74,9 +76,14 @@ export class MessageComponent implements OnInit, OnDestroy{
   windowWith: number;
   openRestReactions = false;
 
+  userListSubscription: any;
+  firestoreService: FirestoreService = inject(FirestoreService);
+  usersListAll: UserInterface[] = [];
+  senderUser: UserInterface[] = [];
 
   ngOnInit() {
-    this.messageName = this.message.senderName;
+    this.getDataOfUser();
+    this.messageName = this.senderUser[0].username;
     if (this.messengerService.channel.channelID !== '') {
       this.unsubMentionsList = this.subMentionsList();
     }
@@ -86,9 +93,30 @@ export class MessageComponent implements OnInit, OnDestroy{
       setTimeout(() => {
         this.messengerService.scrollToBottom(this.messengerService.scrollContainer);
       }, 10);
-    }); //Für die zahlen
+    });
   }
 
+  getDataOfUser() {
+    this.userListSubscription = this.firestoreService.userList$.subscribe(users => {
+      this.usersListAll = users;
+    });
+    if (this.message.senderName !== 'Neuer Gast') {
+      this.senderUser = this.usersListAll.filter(user => user.userID === this.message.senderID);
+    } else {
+      this.senderUser = [
+        {
+          userID: this.message.senderID,
+          password: '',
+          email: '',
+          username: this.message.senderName,
+          avatar: this.message.senderAvatar,
+          userStatus: '',
+          isFocus: false,
+        }
+      ];
+    }
+
+  }
 
   ngAfterViewInit() {
     this.resizeObserver = new ResizeObserver(() => this.checkTextStatus());
@@ -105,9 +133,9 @@ export class MessageComponent implements OnInit, OnDestroy{
       if (this.isTextWrapped && !this.checkTextSenderName) {
         this.windowWith = this.viewportService.width;
         this.checkTextSenderName = true;
-        this.messageName = `${this.messengerService.getFirstWord(this.message.senderName)}. ${this.messengerService.getSecondWordFirstLetter(this.message.senderName)}`;
+        this.messageName = `${this.messengerService.getFirstWord(this.senderUser[0].username)}. ${this.messengerService.getSecondWordFirstLetter(this.senderUser[0].username)}`;
       } else if (this.windowWith < this.viewportService.width) {
-        this.messageName = this.message.senderName;
+        this.messageName = this.senderUser[0].username;
         this.checkTextSenderName = false;
       }
     }
@@ -314,15 +342,17 @@ export class MessageComponent implements OnInit, OnDestroy{
    * Open the thread for answer
    */
   openThread() {
+    this.threadService.openThreadContent = false;
     this.messengerService.messageDates = [];
     if (this.viewportService.width <= 1550) {
       this.messengerService.openMessenger = false;
     }
     setTimeout(() => {
       this.threadService.showThreadSideNav = true;
-      
+      this.threadService.openThreadContent = true;
     }, 10);
     this.threadService.messageToReplyTo = this.message;
+    this.threadService.getDataOfUser();
     this.firebaseMessenger.subSomethingList(this.threadService.messageToReplyTo.messageID, 'answer', () => {
       setTimeout(() => {
         this.messengerService.scrollToBottom(this.threadService.scrollContainer);
