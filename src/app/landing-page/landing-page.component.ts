@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { LandingLoginDialogComponent } from "./landing-login-dialog/landing-login-dialog.component";
 import { StartAnimationComponent } from './start-animation/start-animation.component';
 import { LinksComponent } from './landing-shared/links/links.component';
@@ -8,18 +7,20 @@ import { SessionService } from './services/session.service';
 import { LogoComponent } from "./landing-shared/logo/logo.component";
 import { LandingLoginRegisterButtonComponent } from './landing-login-register-button/landing-login-register-button.component';
 import { AuthserviceService } from './services/authservice.service';
+import { BrowserTypeOnTouchService } from '../shared/services/browser-type-on-touch.service';
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, LandingLoginDialogComponent, StartAnimationComponent, RouterLink, RouterLinkActive, LinksComponent, LogoComponent, LandingLoginRegisterButtonComponent],
+  imports: [CommonModule, LandingLoginDialogComponent, StartAnimationComponent, LinksComponent, LogoComponent, LandingLoginRegisterButtonComponent],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss'
 })
 export class LandingPageComponent implements OnInit, AfterViewInit {
-  showAnimation: boolean = true; 
-  showLogo: boolean = false; 
+  showAnimation: boolean = true;
+  showLogo: boolean = false;
   authService = inject(AuthserviceService);
+  browserTypeOnTouchService: BrowserTypeOnTouchService = inject(BrowserTypeOnTouchService);
   constructor(private sessionService: SessionService) { }
 
   /**
@@ -30,14 +31,14 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
    * false and the showLogo variable is set to true.
    */
   ngOnInit(): void {
-    if(this.authService.currentUserSig()){
+    if (this.authService.currentUserSig()) {
       this.authService.logout();
     }
     if (this.sessionService.isFirstVisit()) {
-      this.showAnimation = true; 
+      this.showAnimation = true;
     } else {
-      this.showAnimation = false; 
-      this.showLogo = true; 
+      this.showAnimation = false;
+      this.showLogo = true;
     }
   }
 
@@ -50,9 +51,9 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.showAnimation) {
       setTimeout(() => {
-        this.showAnimation = false; 
-        this.showLogo = true; 
-      }, 4000); 
+        this.showAnimation = false;
+        this.showLogo = true;
+      }, 4000);
     }
   }
 }
