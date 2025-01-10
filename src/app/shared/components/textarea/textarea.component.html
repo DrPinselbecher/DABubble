@@ -15,8 +15,9 @@
     <div class="interaction-div">
         <textarea (keydown.enter)="uploadFilesToEnter(messenger,$event)" [(ngModel)]="firebaseMessenger.content"
             name="textareaMessenger" #textareaMessenger (input)="checkForMention(firebaseMessenger.content)"
-            [mentionConfig]="mentionConfig" pattern="^[\s\S]*\S[\s\S]*$" placeholder='{{chatOrChannelTxt()}}'
-            #texterea="ngModel" required></textarea>
+            [mentionConfig]="mentionConfig" pattern="^[\s\S]*\S[\s\S]*$"
+            placeholder='{{handlePlaceholderInMessenger()}}' #texterea="ngModel" required
+            [ngClass]="{'p-none': isDefaultGuestName(), 'red-text': isDefaultGuestName()}"></textarea>
         <div id="interaction">
             <div id="button-container-left">
                 <p>
@@ -71,7 +72,7 @@
         <textarea (keydown.enter)="uploadFilesToEnter('thread',$event)" [(ngModel)]="firebaseMessenger.answerContent"
             name="textareaThread" #textareaThread (input)="checkForMention(firebaseMessenger.answerContent)"
             [mentionConfig]="mentionConfig"
-            [placeholder]="authService.isAnonymous() ? 'Bitte logge dich!' : 'Antworten...'" #texterea="ngModel"
+            [placeholder]="authService.isAnonymous() ? 'Bitte logge dich ein!' : 'Antworten...'" #texterea="ngModel"
             pattern="^[\s\S]*\S[\s\S]*$" required></textarea>
         <div id="interaction">
             <div id="button-container-left">

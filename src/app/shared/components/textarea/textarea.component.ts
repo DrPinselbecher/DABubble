@@ -205,12 +205,20 @@ export class TextareaComponent {
    * If the user is in a channel, return "Nachricht an #<channel name>".
    * If the user is in a private chat, return "Schreibe eine Nachricht an <username>".
    */
-  chatOrChannelTxt() {
-    if (this.messengerService.openChart) {
-      return `Schreibe eine Nachricht an ${this.messengerService.user.username}`
+  handlePlaceholderInMessenger() {
+    if (this.isDefaultGuestName()) {
+      return 'Bitte ändere deinen Namen :)'
     } else {
-      return `Nachricht an #${this.messengerService.channel.title}`
+      if (this.messengerService.openChart) {
+        return `Schreibe eine Nachricht an ${this.messengerService.user.username}`
+      } else {
+        return `Nachricht an #${this.messengerService.channel.title}`
+      }
     }
+  }
+
+  isDefaultGuestName() {
+    return this.authService.currentUserSig()!.username === 'Neuer Gast';
   }
 
   /**

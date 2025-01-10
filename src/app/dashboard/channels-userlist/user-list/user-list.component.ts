@@ -38,6 +38,7 @@ export class UserListComponent {
   constructor() { }
 
   ngOnInit(): void {
+    this.listHandlingService.updateTabArrow('#dmIcon');
     this.firestoreService.startSnapshot('users');
     this.firestoreService.startSnapshot('channels');
 
