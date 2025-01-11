@@ -85,8 +85,11 @@ export class FirestoreService {
    * @returns {UserInterface[]} - The filtered list of users.
    */
   filterUnwantedUsers(userList: UserInterface[]): UserInterface[] {
-    return userList.filter(user => user.username !== 'Neuer Gast' && user.email !== 'gast@gast.de');
+    return userList.filter(user =>
+      user.email !== null && user.email !== 'gast@gast.de' && user.username !== 'Neuer Gast' || user.userID === this.authService.currentUserSig()!.userID && user.username !== 'Neuer Gast'
+    );
   }
+
 
   /**
    * Sorts users alphabetically by username and ensures that the current user is placed at the top of the list.

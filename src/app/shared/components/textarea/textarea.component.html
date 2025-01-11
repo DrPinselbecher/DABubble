@@ -17,7 +17,7 @@
             name="textareaMessenger" #textareaMessenger (input)="checkForMention(firebaseMessenger.content)"
             [mentionConfig]="mentionConfig" pattern="^[\s\S]*\S[\s\S]*$"
             placeholder='{{handlePlaceholderInMessenger()}}' #texterea="ngModel" required
-            [ngClass]="{'p-none': isDefaultGuestName(), 'red-text': isDefaultGuestName()}"></textarea>
+            [ngClass]="{'p-none': isDefaultGuestName() || authService.isAnonymous() && messengerService.openChart && authService.currentUserSig()?.username !== messengerService.user.username, 'highlight-text': isDefaultGuestName() || authService.isAnonymous() && messengerService.openChart && authService.currentUserSig()?.username !== messengerService.user.username}"></textarea>
         <div id="interaction">
             <div id="button-container-left">
                 <p>
@@ -73,7 +73,7 @@
             name="textareaThread" #textareaThread (input)="checkForMention(firebaseMessenger.answerContent)"
             [mentionConfig]="mentionConfig"
             [placeholder]="authService.isAnonymous() ? 'Bitte logge dich ein!' : 'Antworten...'" #texterea="ngModel"
-            pattern="^[\s\S]*\S[\s\S]*$" required></textarea>
+            pattern="^[\s\S]*\S[\s\S]*$" required [ngClass]="{'highlight-text': authService.isAnonymous()}"></textarea>
         <div id="interaction">
             <div id="button-container-left">
                 <p>

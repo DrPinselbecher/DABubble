@@ -289,7 +289,7 @@ mat-icon {
     pointer-events: none !important;
 }
 
-.red-text {
-    color: red;
+.highlight-text::placeholder {
+    color: #535AF1;
     font-weight: bold;
 }

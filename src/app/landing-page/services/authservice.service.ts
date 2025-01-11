@@ -398,18 +398,25 @@ export class AuthserviceService {
    * If no user is logged in, throws an error.
    */
   async updateName(newName: string): Promise<void> {
-    const currentUser = this.firebaseAuth.currentUser;
+    let currentUser = this.firebaseAuth.currentUser;
+
     if (!currentUser) {
       throw new Error('No user logged in');
     }
+
+    let profileImage = currentUser.photoURL || this.defaultAvatarURL;
+
     try {
-      await updateProfile(currentUser, { displayName: newName, });
+      await updateProfile(currentUser, { displayName: newName, photoURL: profileImage });
+
       await this.updateCurrentUserDetails(currentUser, undefined, newName);
+
     } catch (error) {
-      console.error('Failed to update name', error);
+      console.error('Failed to update user profile', error);
       throw error;
     }
   }
+
 
   /**
    * Checks if the given email is already in use by another user.
