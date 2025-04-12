@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { MentionUserInterface } from '../../interfaces/mention-user-interface';
-import { collection, doc, Firestore, onSnapshot } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { MessengerService } from '../messenger-service/messenger.service';
 import { UserInterface } from '../../../landing-page/interfaces/userinterface';
 import { FirestoreService } from '../firebase-services/firestore.service';

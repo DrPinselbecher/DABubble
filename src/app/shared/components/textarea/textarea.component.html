@@ -12,12 +12,12 @@
             }
         </div>
     </div>
-    <div class="interaction-div">
+    <div class="interaction-div" [ngClass]="{'p-none': authService.isAnonymous()}">
         <textarea (keydown.enter)="uploadFilesToEnter(messenger,$event)" [(ngModel)]="firebaseMessenger.content"
             name="textareaMessenger" #textareaMessenger (input)="checkForMention(firebaseMessenger.content)"
             [mentionConfig]="mentionConfig" pattern="^[\s\S]*\S[\s\S]*$"
             placeholder='{{handlePlaceholderInMessenger()}}' #texterea="ngModel" required
-            [ngClass]="{'p-none': isDefaultGuestName() || authService.isAnonymous() && messengerService.openChart && authService.currentUserSig()?.username !== messengerService.user.username, 'highlight-text': isDefaultGuestName() || authService.isAnonymous() && messengerService.openChart && authService.currentUserSig()?.username !== messengerService.user.username}"></textarea>
+            [ngClass]="{'highlight-text': authService.isAnonymous()}"></textarea>
         <div id="interaction">
             <div id="button-container-left">
                 <p>

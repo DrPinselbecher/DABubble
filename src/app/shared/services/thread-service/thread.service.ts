@@ -90,15 +90,28 @@ export class ThreadService {
   }
 
   getCleanJson(user: UserInterface[]): UserInterface {
-    let userJson = {
-      userID: user[0]['userID'],
-      password: user[0]['password'],
-      email: user[0]['email'],
-      username: user[0]['username'],
-      avatar: user[0]['avatar'],
-      userStatus: user[0]['userStatus'],
-      isFocus: user[0]['isFocus'],
+    if (!user[0]) {
+      let userJson = {
+        userID: '',
+        password: '',
+        email: '',
+        username: 'Unbekannt',
+        avatar: '',
+        userStatus: '',
+        isFocus: false,
+      };
+      return userJson;
     }
+
+    let userJson = {
+      userID: user[0].userID,
+      password: user[0].password,
+      email: user[0].email,
+      username: user[0].username,
+      avatar: user[0].avatar,
+      userStatus: user[0].userStatus,
+      isFocus: user[0].isFocus,
+    };
     return userJson;
   }
 

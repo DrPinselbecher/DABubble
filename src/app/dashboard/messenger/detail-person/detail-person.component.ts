@@ -8,6 +8,7 @@ import { UserInterface } from '../../../landing-page/interfaces/userinterface';
 import { FirebaseMessengerService } from '../../../shared/services/firebase-services/firebase-messenger.service';
 import { FirestoreService } from '../../../shared/services/firebase-services/firestore.service';
 import { UserListHandlingService } from '../../channels-userlist/user-list/user-list-handling.service';
+import { AnimationChannelService } from '../../channels-userlist/channel-list/animation.service.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class DetailPersonComponent {
   dialog = inject(MatDialog);
   firestoreService = inject(FirestoreService);
   userListHandlingService = inject(UserListHandlingService);
+  channelAnimationService: AnimationChannelService = inject(AnimationChannelService);
   data: UserInterface = inject(MAT_DIALOG_DATA);
 
 
@@ -47,7 +49,7 @@ export class DetailPersonComponent {
     }
   }
 
-  
+
   /**
    * Opens the messenger UI for a direct message conversation with the given user.
    * It first closes other UI elements, then sets the messenger service to open a chart
@@ -62,6 +64,10 @@ export class DetailPersonComponent {
     this.messengerService.showChart(this.data);
     this.firebaseMessenger.searchChat(this.data);
     this.focusUser(user);
+    this.channelAnimationService.focusedChannelId = '';
+    if (!this.userListHandlingService.isDirectMessagesOpen) {
+      this.userListHandlingService.toggleDirectMessages();
+    }
   }
 
 
@@ -83,7 +89,7 @@ export class DetailPersonComponent {
     this.setFocus(user);
   }
 
-  
+
   /**
    * Sets the focus state of the given user to true and updates the
    * focusedUserId in the UserListHandlingService.
@@ -97,7 +103,7 @@ export class DetailPersonComponent {
     }
   }
 
-  
+
   /**
    * Resets the focus state of all channels to false.
    * This is called when a user is selected to ensure that the previously focused channel

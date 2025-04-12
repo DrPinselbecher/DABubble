@@ -85,7 +85,7 @@ export class TextareaComponent {
   ngOnInit() {
     this.subscription = this.messengerService.textareaMessenger.subscribe(() => {
       if (this.textareaMessenger) {
-        if (this.isDefaultGuestName() || this.authService.isAnonymous() && this.messengerService.openChart && this.authService.currentUserSig()?.username !== this.messengerService.user.username) return;
+        if (this.authService.isAnonymous()) return;
         this.textareaMessenger.nativeElement.focus();
       }
     });
@@ -207,8 +207,8 @@ export class TextareaComponent {
    * If the user is in a private chat, return "Schreibe eine Nachricht an <username>".
    */
   handlePlaceholderInMessenger() {
-    if (this.isDefaultGuestName() && !this.messengerService.openChart) {
-      return 'Bitte ändere deinen Namen :)'
+    if (this.authService.isAnonymous()) {
+      return 'Bitte logge dich ein!';
     } else {
       if (this.messengerService.openChart) {
         if (this.authService.isAnonymous() && this.messengerService.openChart && this.authService.currentUserSig()?.username !== this.messengerService.user.username) return 'Bitte logge dich ein!';

@@ -382,8 +382,8 @@ export class AuthserviceService {
     const updatedUser: UserInterface = {
       userID: user.uid,
       password: '',
-      email: newEmail || user.email,
-      username: newName || user.displayName,
+      email: newEmail || user.email || this.guestEmail,
+      username: newName!,
       avatar: user.photoURL,
       isFocus: false,
       userStatus: userstatus || 'on',
